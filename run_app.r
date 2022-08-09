@@ -2,10 +2,10 @@ library(tidyverse)
 library(lubridate)
 library(sf)
 library(shiny)
-library(shinyWidgets)
 library(leaflet)
-library(htmlwidgets)
-library(leaflegend)
+#library(shinyWidgets)
+#library(htmlwidgets)
+#library(leaflegend)
 
 
 #library(reactlog)
