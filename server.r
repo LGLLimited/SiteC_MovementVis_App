@@ -24,7 +24,7 @@ server <- function(input, output, session) {
   output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-                labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity=1,position = "topright") %>% 
+                labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity=1, position = "topright") %>% 
       addControl(layerId="ind_title",
                  html = ind_title(),
                  className = 'map-title')
@@ -60,8 +60,6 @@ server <- function(input, output, session) {
     `Movement`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "lightgray", iconColor = "black")
   )
   
- 
-  
   observeEvent({input$index
     input$basemap
     input$tabs}, {
@@ -89,6 +87,7 @@ server <- function(input, output, session) {
                    className = 'map-title')
        
     })
+  
 # Seasonal Map Params ####
   
   output$map2 <- renderLeaflet({
@@ -104,7 +103,7 @@ server <- function(input, output, session) {
   
     dataset <- reactive({
       req(input$interval)
-    d <-  if(input$interval=="Monthly"){1}else{2}
+      d <-  if(input$interval=="Monthly"){1}else{2}
       d_seas[[d]]
       })
  
@@ -124,12 +123,10 @@ dat <- reactive({
   dat1() %>% filter(Life_Stage==input$lifestage)
   })
 
-
   filterTime <- reactive({
      req(input$month)
     dat() %>% dplyr::filter(Time==input$month)
   })
-  
   
 n <- reactive({
   req(input$species,input$month,input$interval)
@@ -137,13 +134,12 @@ n <- reactive({
   n_month %>% dplyr::filter(Species==input$species, Time==input$month, Life_Stage==input$lifestage) %>% pull(n)
    }else{
   n_week %>% dplyr::filter(Species==input$species, Time==input$month, Life_Stage==input$lifestage) %>% pull(n) }
-  
   })
 
 #sp_title <-  reactive({
  # tags$div(map_title_tag, HTML(input$lifestage, input$species))})
   
-  seas_title <- reactive({
+seas_title <- reactive({
     tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("n=",n())))})
   
 colors <- reactive({
@@ -164,9 +160,8 @@ colors <- reactive({
                 }, 
     {
     
-      pal <- colorFactor(colors(),
-                         levels=factor(c("Release","Station","Mobile"),
-                                       levels = c("Release","Station","Mobile")),ordered = TRUE)
+pal <- colorFactor(colors(),
+                   levels=factor(c("Release","Station","Mobile"),levels = c("Release","Station","Mobile")),ordered = TRUE)
                          
       leafletProxy("map2") %>%
         clearGroup("fish") %>%
@@ -212,8 +207,8 @@ map_title_tag <-  tags$style(HTML("
   }
 "))
   
-
 # UI outputs ####  
+  
   output$choiceUI <- renderUI({
     if(input$tabs=="Individual Movements"){
       selectInput("fish","Select a fish.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
@@ -234,15 +229,6 @@ map_title_tag <-  tags$style(HTML("
     
     })
 
- # seas_choices <- reactive({unique(filterLifestage()$Time)})
-   #  #if(input$interval=="Monthly"){
-   #    unique(filterLifestage()$MoYr)#} 
-   #  #else {
-   #  #  unique(filterLifestage()$WkYr)}
-   #  })
-   
-  #output$choices <- renderText({seas_choices()})
-  
   output$dateUI <- renderUI({
     if(input$tabs=="Individual Movements"){
       sliderTextInput(inputId = "index", "Play animation:",
