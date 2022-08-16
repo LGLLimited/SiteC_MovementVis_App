@@ -46,7 +46,7 @@ HTML("Since 2019 six species have been tagged with radio transmitters to assess 
   The individual movement tab animates detections of tagged individuals through time. The fish marker appears as gray for volitional movements, and red for hauled movements.
   <h2>Seasonal Distribution:</h2>
   <br>
-  The seasonal distribution tab animates the counts of unique tagged individuals at each detection location on either weekly or monthly time steps. 
-  The size of the circle markers is proportional to the number of unique individuals detected at a location during the displayed time period.
+  The seasonal distribution tab animates counts of unique tagged individuals at each detection location during weekly or monthly time intervals. 
+  The size of the circle is proportional to the number of unique individuals detected at a location during the displayed time period.
   ")
 }
