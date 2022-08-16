@@ -24,7 +24,10 @@ server <- function(input, output, session) {
   output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-                labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity = 1, position = "topright")
+                labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity=1,position = "topright") %>% 
+      addControl(layerId="ind_title",
+                 html = ind_title(),
+                 className = 'map-title')
     })
   
   filterFish <- reactive({
@@ -44,9 +47,13 @@ server <- function(input, output, session) {
     ls <- unique(filterFish()$Life_Stage)
     
     tags$div(
-      map_title_tag, HTML(sp,"<br> Tag #:",tag,"<br>",ls,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y"))
+      map_title_tag, HTML(sp,"<br> Tag #:",tag,"<br>",ls)#,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y"))
     )
   })
+  
+  date_title <- reactive({
+    tags$div(map_title_tag,HTML(format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y")))
+    })
   
   iconSet <- awesomeIconList(
     `Hauled`=makeAwesomeIcon(icon="fish", library = "fa", text=fontawesome::fa('fish'), markerColor = "red", iconColor = "black"),
@@ -61,7 +68,7 @@ server <- function(input, output, session) {
       leafletProxy("map1", data = filterDate()) %>%
         clearGroup("fish") %>%
         clearGroup("ref") %>% 
-        removeControl("ind_title") %>% 
+        removeControl("date_title") %>% 
         addAwesomeMarkers(lng = ~ Longitude,  
                           lat = ~ Latitude,
                           icon= ~iconSet[haul],
@@ -77,21 +84,23 @@ server <- function(input, output, session) {
                          label = ~StreamName,
                          labelOptions = labelOptions(direction = 'top'),
                          radius=5) %>% 
-        addControl(layerId="ind_title",
-                   html = ind_title(),
-                   className = 'map-title') #%>%  
-     #   addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
-     #   addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-     #             labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity = 1, position = "topright")
+        addControl(layerId="date_title",
+                   html = date_title(),
+                   className = 'map-title')
        
     })
 # Seasonal Map Params ####
   
-  output$map2 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
-      addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),labels=c("Site C - Pre-diversion","Site C - Diverted"),opacity = 1) %>% 
+  output$map2 <- renderLeaflet({
+    make_map(basemap, peace_network, location_pts) %>% 
       addLegend(title = "Detection Type",
                 labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
-                colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1)})
+                colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1) %>% 
+    addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),labels=c("Site C - Pre-diversion","Site C - Diverted"),opacity = 1)
+      #addControl(layerId="sp_title",
+      #           html = sp_title(),
+        #         className = 'map-title')
+    })
   
     dataset <- reactive({
       req(input$interval)
@@ -131,10 +140,11 @@ n <- reactive({
   
   })
 
+#sp_title <-  reactive({
+ # tags$div(map_title_tag, HTML(input$lifestage, input$species))})
+  
   seas_title <- reactive({
-    tags$div(
-      map_title_tag, HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("n=",n())))
-    })
+    tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("n=",n())))})
   
 colors <- reactive({
     req(input$basemap)
@@ -162,7 +172,6 @@ colors <- reactive({
         clearGroup("fish") %>%
         clearGroup("ref") %>% 
         removeControl("seas_title") %>% 
-        #clearControls("seas_title") %>% 
         addCircleMarkers(data = filterTime(),
                          lng = ~Longitude,  
                          lat = ~Latitude,
@@ -184,13 +193,7 @@ colors <- reactive({
                          label = ~StreamName,
                          labelOptions = labelOptions(direction = 'top'),
                          radius=5) %>%
-       # addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),labels=c("Site C - Pre-diversion","Site C - Diverted"),opacity = 1) %>% 
-       # addLegend(values=factor(c("Station","Mobile","Release","Haul"),levels=c("Station","Mobile","Release","Haul")),pal = pal,opacity = 1,colors =paste0()) %>% #,"; border-radius: 50%; width:",20,"px; height:",20,"px;", 
-       # addLegend(title = "Detection Type",
-       #           labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
-      #            colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1) %>%  
-        #addLegendCustom(colors = c("blue", "blue", 'blue'), labels = c("5 individuals", "10 individuals", "52 individuals"), sizes = c(5, 15, 25)) %>% 
-        addControl(layerId="seas_title",html = seas_title(), className = 'map-title')
+              addControl(layerId="seas_title",html = seas_title(), className = 'map-title')
     })
   
 # Map title HTML style ####  
@@ -203,11 +206,12 @@ map_title_tag <-  tags$style(HTML("
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,1);
     font-weight: bold;
     font-size: 24px;
   }
 "))
+  
 
 # UI outputs ####  
   output$choiceUI <- renderUI({
