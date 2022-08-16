@@ -39,7 +39,7 @@ data_description <- function(){
 HTML("Since 2019 six species have been tagged with radio transmitters to assess movement patterns in the Peace River basin. 
   Tagged species include Bull Trout, Arctic Grayling, Rainbow Trout, Walleye, Mountain Whitefish and Burbot. 
   Fixed receivers are operated from April through October each year and data downloaded monthly. Mobile tracking occurs periodically throughout the year.
-  Two visualizations of the detection data are provided in the plots tab.
+  Two visualizations of the detection data are provided in the plots tab:
   <br>
   <h2>Individual Movements:</h2>
   <br>
