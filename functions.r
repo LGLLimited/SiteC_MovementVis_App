@@ -38,7 +38,9 @@ center_map <- function(map_id){
 data_description <- function(){
 HTML("Since 2019 six species have been tagged with radio transmitters to assess movement patterns in the Peace River basin. 
   Tagged species include Bull Trout, Arctic Grayling, Rainbow Trout, Walleye, Mountain Whitefish and Burbot. 
-  Fixed receivers are operated from April through October each year and data downloaded monthly. Mobile tracking occurs periodically throughout the year.
+  Fixed receivers are operated from April through October each year and data downloaded monthly. 
+  Mobile surveys target Arctic Grayling in the Moberly River from May to June and Bull Trout in the Halfway River from August to September to identify likely spawning locations and movement timing. 
+  Mobile surveys are also conducted throughout the watershed several times during winter months to supplement detection data while the majority of the fixed-receiver array is offline. 
   Two visualizations of the detection data are provided in the plots tab:
   <br>
   <h2>Individual Movements:</h2>
