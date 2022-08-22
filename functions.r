@@ -49,6 +49,7 @@ HTML("Since 2019 six species have been tagged with radio transmitters to assess 
   <h2>Seasonal Distribution:</h2>
   <br>
   The seasonal distribution tab animates counts of unique tagged individuals at each detection location during weekly or monthly time intervals. 
-  The size of the circle is proportional to the number of unique individuals detected at a location during the displayed time period.
+  The size of the circle is proportional to the number of unique individuals detected at a location during the displayed time period. 
+  Circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections.
   ")
 }
