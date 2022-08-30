@@ -163,8 +163,6 @@ pal <- colorFactor(colors(),
                          
       leafletProxy("map2") %>%
         clearGroup("fish") %>%
-        clearGroup("ref") %>% 
-        removeControl("seas_title") %>% 
         addCircleMarkers(data = filterTime(),
                          lng = ~Longitude,  
                          lat = ~Latitude,
@@ -174,7 +172,8 @@ pal <- colorFactor(colors(),
                          fillColor = ~pal(Type),#if_else(input$basemap=="Terrain",'blue',"#f0ea4d"),
                          radius = ~suppressWarnings(((n/max(n))*20)+5), # would throw warnings when switching certain species
                          group="fish") %>% 
-        addCircleMarkers(data=location_pts,
+        addCircleMarkers(layerId="points",
+                         data=location_pts,
                          lng=~long,
                          lat=~lat,
                          group = "ref",
