@@ -64,18 +64,16 @@ server <- function(input, output, session) {
     input$basemap
     input$tabs}, {
       leafletProxy("map1", data = filterDate()) %>%
-        clearGroup("fish") %>%
-        clearGroup("ref") %>% 
-        removeControl("date_title") %>% 
-        addAwesomeMarkers(lng = ~ Longitude,  
+        addAwesomeMarkers(layerId = "fish",
+                          lng = ~ Longitude,  
                           lat = ~ Latitude,
                           icon= ~iconSet[haul],
                           label= ~HTML(Species,"<br>", tagcode,"<br>",Life_Stage),
                           group="fish") %>% 
-        addCircleMarkers(data=location_pts,
+        addCircleMarkers(layerId="points",
+                         data=location_pts,
                          lng=~long,
                          lat=~lat,
-                         group = "ref",
                          stroke=FALSE,
                          fillOpacity = 1,
                          fillColor = ifelse(filterDate()$Datetime>=as.POSIXct("2020-10-03",tz="UTC"),'red','black'),
