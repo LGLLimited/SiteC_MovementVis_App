@@ -179,7 +179,8 @@ pal <- colorFactor(colors(),
                          group = "ref",
                          stroke=FALSE,
                          fillOpacity = 1,
-                         fillColor = case_when(input$interval=="Weekly" & all(filterTime()$Timestart >= as.POSIXct("2020-10-03",tz="UTC")) | 
+                         fillColor = case_when(nrow(filterTime())==0~"black",
+                           input$interval=="Weekly" & all(filterTime()$Timestart >= as.POSIXct("2020-10-03",tz="UTC")) | 
                                                input$interval=="Monthly" & all(filterTime()$Timestart >= as.POSIXct("2020-10-01 00:00:00",tz="UTC")) ~  'red',
                                                TRUE ~ 'black'),
                          label = ~StreamName,
