@@ -152,7 +152,6 @@ colors <- reactive({
   
   observeEvent({input$month
                 input$species
-                input$lifestage
                 input$basemap
                 input$tabs
                 }, 
