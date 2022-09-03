@@ -150,8 +150,7 @@ colors <- reactive({
     }
   })
   
-  observeEvent({input$month
-                input$species
+  observeEvent({filterTime()
                 input$basemap
                 input$tabs
                 }, 
