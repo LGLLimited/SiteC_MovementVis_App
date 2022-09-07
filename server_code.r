@@ -18,7 +18,13 @@ server <- function(input, output, session) {
       center_map("map2")
        }
   })
-  
+
+  observeEvent(fps(),{
+    if(input$tabs=="Individual Movements"){
+    updateSliderTextInput(session,inputId = "index",selected = input$index)}
+    else{updateSliderTextInput(session,inputId = "month",selected = input$month)}
+    })
+  # 
 # Individual Map Params ####
   
   output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
