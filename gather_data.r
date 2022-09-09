@@ -15,17 +15,17 @@ det_sites <- d %>%
   st_as_sf(coords=c("Longitude","Latitude"),crs=4326) %>% 
   filter(!str_detect(Detect_Site,"HIST"))
 
-peace_network <- st_read(dsn = './data',layer="peace_line") %>% 
+peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>% 
   st_transform(4326) %>% 
   st_zm() %>% 
   filter(StreamName %in% c("Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
-location_pts <- st_read(dsn='./data',layer="shp_locations-point") %>% 
+location_pts <- st_read(dsn='./data',layer="shp_locations-point",quiet=TRUE) %>% 
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
 
-zone_coord_lut <- read_csv("data/mobile_zone_midpoints.csv") %>% 
+zone_coord_lut <- read_csv("data/mobile_zone_midpoints.csv",show_col_types = FALSE) %>% 
   rename(ZoneLat=Latitude, 
          ZoneLong=Longitude)
 
