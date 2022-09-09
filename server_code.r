@@ -27,13 +27,12 @@ server <- function(input, output, session) {
   # 
 # Individual Map Params ####
   
-  output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
+  output$map1 <- renderLeaflet({make_map(basemap,plot_desc, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-                labels=c("Site C - Pre-diversion","Site C - Diverted"), opacity=1, position = "topright") %>% 
-      addControl(layerId="ind_title",
-                 html = ind_title(),
-                 className = 'map-title')
+                labels=c("Site C - Pre-diversion","Site C - Diverted"),
+                opacity=1, 
+                position = "topright") 
     })
   
   filterFish <- reactive({
@@ -47,24 +46,29 @@ server <- function(input, output, session) {
     filterFish() %>% dplyr::filter(Datetime==as.POSIXct(input$index, tz="UTC"))
   })
   
-  ind_title <- reactive({
-    sp <- unique(filterFish()$Species)
-    tag <- unique(filterFish()$tagcode)
-    ls <- unique(filterFish()$Life_Stage)
-    
-    tags$div(
-      map_title_tag, HTML(sp,"<br> Tag #:",tag,"<br>",ls)#,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y"))
-    )
-  })
-  
   date_title <- reactive({
-    tags$div(map_title_tag,HTML(format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y")))
+      sp <- unique(filterFish()$Species)
+       tag <- unique(filterFish()$tagcode)
+       ls <- unique(filterFish()$Life_Stage)
+    tags$div(map_title_tag,HTML(sp,"<br> Tag #:",tag,"<br>",ls,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y")))
     })
   
   iconSet <- awesomeIconList(
     `Hauled`=makeAwesomeIcon(icon="fish", library = "fa", text=fontawesome::fa('fish'), markerColor = "red", iconColor = "black"),
     `Movement`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "lightgray", iconColor = "black")
   )
+
+  plot_desc <- reactive({
+    req(input$tabs)
+    if(input$tabs=="Individual Movements"){
+      text <- "This plot animates detections of tagged individuals through time. 
+      The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility."
+    }else{
+      text <- "This plot animates counts of tagged individuals at each detection location during weekly or monthly time intervals. 
+      The size of the circle is proportional to the number of unique individuals detected at a location during the displayed time period. Circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
+    }
+    tags$div(map_desc_tag,HTML(text))
+  })
   
   observeEvent({input$index
     input$basemap
@@ -73,7 +77,7 @@ server <- function(input, output, session) {
         addAwesomeMarkers(layerId = "fish",
                           lng = ~ Longitude,  
                           lat = ~ Latitude,
-                          icon= ~iconSet[haul],
+                          icon= ~ iconSet[haul],
                           label= ~HTML(Species,"<br>", tagcode,"<br>",Life_Stage),
                           group="fish") %>% 
         addCircleMarkers(layerId="points",
@@ -95,14 +99,13 @@ server <- function(input, output, session) {
 # Seasonal Map Params ####
   
   output$map2 <- renderLeaflet({
-    make_map(basemap, peace_network, location_pts) %>% 
+    make_map(basemap, plot_desc, peace_network, location_pts) %>% 
       addLegend(title = "Detection Type",
                 labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
                 colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1) %>% 
-    addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),labels=c("Site C - Pre-diversion","Site C - Diverted"),opacity = 1)
-      #addControl(layerId="sp_title",
-      #           html = sp_title(),
-        #         className = 'map-title')
+      addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
+                labels=c("Site C - Pre-diversion","Site C - Diverted"),
+                opacity = 1)
     })
   
     dataset <- reactive({
@@ -111,7 +114,6 @@ server <- function(input, output, session) {
       d_seas[[d]]
       })
  
-    
 dat1 <-  reactive({
   req(input$species)
   dataset() %>% filter(Species==input$species)})
@@ -127,7 +129,7 @@ dat <- reactive({
   dat1() %>% filter(Life_Stage==input$lifestage)
   })
 
-  filterTime <- reactive({
+filterTime <- reactive({
      req(input$month)
     dat() %>% dplyr::filter(Time==input$month)
   })
@@ -196,26 +198,42 @@ pal <- colorFactor(colors(),
 # Map title HTML style ####  
 map_title_tag <-  tags$style(HTML("
   .leaflet-control.map-title {
-    transform: translate(-50%,20%);
+    transform: translate(-81%,-1%);
     position: relative !important;
     left: 50%;
-    width:300px;
+    width: 250px;
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
     background: rgba(255,255,255,1);
     font-weight: bold;
-    font-size: 24px;
+    font-size: 18px;
   }
 "))
   
+  map_desc_tag <-  tags$style(HTML("
+  .leaflet-control.map-desc{
+    transform: translate(-51%,-1%);
+    position: relative !important;
+    left: 50%;
+    width:400px;
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: rgba(255,255,255,.75);
+    font-weight: normal;
+    font-size: 14px;
+  }
+"))
+  
+
 # UI outputs ####  
   
   output$choiceUI <- renderUI({
     if(input$tabs=="Individual Movements"){
-      selectInput("fish","Select a fish.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
+      selectInput("fish","Select fish.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
     }else{
-      selectInput("species","Select a species.",choices=unique(d2$Species), selected="Bull Trout")
+      selectInput("species","Select species.",choices=unique(d2$Species), selected="Bull Trout")
     }
   })
   
@@ -223,7 +241,7 @@ map_title_tag <-  tags$style(HTML("
     if(input$tabs=="Seasonal Distribution"){
       tagList(
         selectInput("lifestage","Select life stage.", choices=choices$lifestage),
-        selectInput("interval","Choose time step.",choices=c("Monthly", "Weekly"), selected="Monthly")
+        selectInput("interval","Select time step.",choices=c("Monthly", "Weekly"), selected="Monthly")
         )
         
         } 
