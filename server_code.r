@@ -50,7 +50,7 @@ server <- function(input, output, session) {
       sp <- unique(filterFish()$Species)
        tag <- unique(filterFish()$tagcode)
        ls <- unique(filterFish()$Life_Stage)
-    tags$div(map_title_tag,HTML(sp,"<br> Tag #:",tag,"<br>",ls,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y")))
+    tags$div(map_title_tag,HTML(sp,"<br> Tag #",tag,"<br>",ls,"<br>",format(as.POSIXct(input$index,tz="UTC"),"%b %d, %Y")))
     })
   
   iconSet <- awesomeIconList(
@@ -58,16 +58,18 @@ server <- function(input, output, session) {
     `Movement`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "lightgray", iconColor = "black")
   )
 
-  plot_desc <- reactive({
+  output$plot_desc <- #reactive({
+    renderText({
     req(input$tabs)
     if(input$tabs=="Individual Movements"){
       text <- "This plot animates detections of tagged individuals through time. 
       The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility."
     }else{
-      text <- "This plot animates counts of tagged individuals at each detection location during weekly or monthly time intervals. 
-      The size of the circle is proportional to the number of unique individuals detected at a location during the displayed time period. Circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
+      text <- "This plot animates counts of tagged individuals at each detection location through time at the selected time step. 
+      The size of the circle is proportional to the number of unique individuals detected at a location. Circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
     }
-    tags$div(map_desc_tag,HTML(text))
+      text
+    #tags$div(map_desc_tag,HTML(text))
   })
   
   observeEvent({input$index
@@ -146,7 +148,7 @@ n <- reactive({
  # tags$div(map_title_tag, HTML(input$lifestage, input$species))})
   
 seas_title <- reactive({
-    tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("n=",n())))})
+    tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("Number of tagged fish= ",n())))})
   
 colors <- reactive({
     req(input$basemap)
@@ -169,15 +171,15 @@ pal <- colorFactor(colors(),
                          
       leafletProxy("map2") %>%
         clearGroup("fish") %>%
-        addCircleMarkers(data = filterTime(),
+        addCircleMarkers(group="fish",
+                         data = filterTime(),
                          lng = ~Longitude,  
                          lat = ~Latitude,
                          fillOpacity = .7,
                          stroke=FALSE,
                          label = paste0("",filterTime()$n), # causes crash when changing species found the paste0("") solution on SO:https://gis.stackexchange.com/questions/333997/error-while-rendering-leaflet-map-on-shiny
                          fillColor = ~pal(Type),#if_else(input$basemap=="Terrain",'blue',"#f0ea4d"),
-                         radius = ~suppressWarnings(((n/max(n))*20)+5), # would throw warnings when switching certain species
-                         group="fish") %>% 
+                         radius = ~suppressWarnings(((n/max(n))*20)+5)) %>% # would throw warnings when switching certain species
         addCircleMarkers(layerId="points",
                          data=location_pts,
                          lng=~long,
@@ -198,7 +200,7 @@ pal <- colorFactor(colors(),
 # Map title HTML style ####  
 map_title_tag <-  tags$style(HTML("
   .leaflet-control.map-title {
-    transform: translate(-81%,-1%);
+    transform: translate(-50%,20%);
     position: relative !important;
     left: 50%;
     width: 250px;
@@ -211,27 +213,27 @@ map_title_tag <-  tags$style(HTML("
   }
 "))
   
-  map_desc_tag <-  tags$style(HTML("
-  .leaflet-control.map-desc{
-    transform: translate(-51%,-1%);
-    position: relative !important;
-    left: 50%;
-    width:400px;
-    text-align: left;
-    padding-left: 5px;
-    padding-right: 5px;
-    background: rgba(255,255,255,.75);
-    font-weight: normal;
-    font-size: 14px;
-  }
-"))
+#   map_desc_tag <-  tags$style(HTML("
+#   .leaflet-control.map-desc{
+#     transform: translate(-51%,-1%);
+#     position: relative !important;
+#     left: 50%;
+#     width:400px;
+#     text-align: left;
+#     padding-left: 5px;
+#     padding-right: 5px;
+#     background: rgba(255,255,255,.75);
+#     font-weight: normal;
+#     font-size: 14px;
+#   }
+# "))
   
 
 # UI outputs ####  
   
   output$choiceUI <- renderUI({
     if(input$tabs=="Individual Movements"){
-      selectInput("fish","Select fish.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
+      selectInput("fish","Select individual.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
     }else{
       selectInput("species","Select species.",choices=unique(d2$Species), selected="Bull Trout")
     }
@@ -251,14 +253,14 @@ map_title_tag <-  tags$style(HTML("
 
   output$dateUI <- renderUI({
     if(input$tabs=="Individual Movements"){
-      sliderTextInput(inputId = "index", "Play animation:",
+      sliderTextInput(inputId = "index", "Play animation.",
                       choices=unique(filterFish()$Datetime),
                       animate=animationOptions(interval=fps(),loop=FALSE),
                       dragRange=FALSE,
                       hide_min_max = TRUE,
                       force_edges = TRUE)
     }else{
-      sliderTextInput("month",label="Play animation:",
+      sliderTextInput("month",label="Play animation.",
                       choices=unique(dat()$Time),
                       force_edges = TRUE,
                       animate=animationOptions(interval=fps(),loop=FALSE))

@@ -5,12 +5,18 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                             tabPanel("Info",
                                      fluidPage(
                                        titlePanel(h1("Site C Fish Movement Assessment",align='center')),
-                                       br(),br(),br(),
-                                     fluidRow(column(width=5, data_description(),style="text-align: justify;font-size: 16px"),
-                                     column(width=7,img(src="Project.png",width="75%",style="float: left; padding-left: 200px",title="Site C Project"))),
-                                     br(),
-                                     fluidRow(column(width=5),
-                                     column(width=7,img(src="Antenna.png",title="A fixed-station antenna on the Peace River.", width="75%",style="float: left; padding-left: 200px"))))),
+                                       br(),br(),
+                                     fluidRow(
+                                     column(width=4, data_description(),style="text-align: justify;font-size: 16px;padding-right:30px"),
+                                     column(width=4,style="padding:0px;text-align:center;",offset=0,
+                                            img(src="Project.png",width="90%",title="Aerial view of the Site C project.",style="padding-bottom:10px;"), 
+                                            img(src="airplane.png",width="90%",title="Fixed-wing aircraft with radio antenna for mobile tracking.",style="padding-bottom:10px;")),
+                                            #br(),
+                                      column(width=4,offset=0,style="padding:0px;text-align:center;",
+                                            img(src="Antenna.png",width="90%",title="A fixed-station antenna on the Peace River.",style="padding-bottom:10px;"),
+                                            img(src="Moberly River 2.JPG",width="90%",title="Helicopter for mobile tracking.",style="padding-bottom:10px;"))
+                                            ))),#style="float: left; padding-left: 20px",title=,#)),
+                                    
                             # TEXT OUTPUT FOR WELCOME PAGE
                             tabPanel("Map",
                                      titlePanel(h1("Fixed Receiver Locations in the Peace River Basin",align='center')),
@@ -20,6 +26,7 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                             tabPanel("Plots",
                                      sidebarLayout(
                                        sidebarPanel(width=3,
+                                            fluidRow(
                                         # make hr() black
                                        tags$head(tags$style(HTML("hr {border-top: 1px solid #000000;}"))),
                                        # play button size
@@ -41,6 +48,7 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                                        br(),
                                        uiOutput("dateUI"),
                                        ),
+                                          fluidRow(HTML("<b>Plot description.</b>"),textOutput("plot_desc"))),
     mainPanel(
       tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
       tabsetPanel(id="tabs",
