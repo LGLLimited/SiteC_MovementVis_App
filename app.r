@@ -10,7 +10,7 @@ library(leaflegend)
 
 # Get the underlying data
 #source("gather_data.r") # the data processing doesn't need to  be done every time the app loads, only when operational data are updated.
-load("data/app_data.rda") # load the environment with objects needed instead of processing every time at startup.
+load("data/app_data.rda", envir = .GlobalEnv) # load the environment with objects needed instead of processing every time at startup.
 
 # Source the app
 source("functions.r")
