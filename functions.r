@@ -61,7 +61,7 @@ HTML('
   </p> 
   <p>
   <h2> About this Shiny App </h2>
-  Two visualizations of the detection data are provided on the Plots tab. The <b>Individual Movements</b> tab plots detection locations for an individual fish through time. The <b>Seasonal Distribution tab</b> 
+  Two visualizations of the detection data are provided on the Plots tab. The <b>Individual Movements</b> tab plots detection locations for an individual fish through time. The <b>Seasonal Distribution</b> tab
   shows counts of unique individuals at detection locations during either weekly or monthly time intervals with circles sized proportionally to the number of individuals detected. 
   Detection locations are colored to distinguish release locations, detections at fixed stations, and mobile survey detections.
   </p>
