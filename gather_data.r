@@ -1,5 +1,8 @@
+library(tidyverse)
+library(lubridate)
+library(sf)
 
-
+# Operational data ####
 d_opr <- readRDS("data/data_operational_10Feb22.rds")
 
 d <- d_opr %>% 
@@ -8,7 +11,7 @@ d <- d_opr %>%
   filter((!is.na(Latitude) & !is.na(Longitude))) %>% 
   mutate(Life_Stage=if_else(Life_Stage=="adult","Adult",Life_Stage))
 
-
+# Map data ####
 det_sites <- d %>% 
   filter(Type %in% c("Station","Release","Haul")) %>% 
   distinct(Detect_Site,Type, Latitude, Longitude) %>%
@@ -21,7 +24,7 @@ peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>%
   filter(StreamName %in% c("Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
-location_pts <- st_read(dsn='./data',layer="shp_locations-point",quiet=TRUE) %>% 
+location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>% 
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
 
@@ -29,11 +32,8 @@ zone_coord_lut <- read_csv("data/mobile_zone_midpoints.csv",show_col_types = FAL
   rename(ZoneLat=Latitude, 
          ZoneLong=Longitude)
 
-ind_d <- d  %>% #filter(Tag_ID==898)
-   # present data
-  # left_join(zone_coord_lut,by="Zone_No") %>% # snap mobile dets to zone river segment centriods in zone_coord_lut
-  # mutate(Latitude=if_else(Type=="Mobile",ZoneLat,Latitude),
-  #        Longitude=if_else(Type=="Mobile",ZoneLong,Longitude)) %>% 
+# Individual data ####
+ind_d <- d  %>% #filter(Tag_ID==898) 
   select(Tag_ID,Ch,Code,Life_Stage,Species,Detect_Site,First_Datetime,Last_Datetime,Latitude,Longitude) %>% 
   arrange(First_Datetime) %>% 
   pivot_longer(cols = c(First_Datetime,Last_Datetime), names_to = "FirstLast", values_to = "Datetime") %>% 
@@ -52,22 +52,29 @@ ind_d <- d  %>% #filter(Tag_ID==898)
 
 #ind_d %>% filter(Tag_ID==1018)
 
-most_tags_by_sp <- ind_d  %>% group_by(Tag_ID,Life_Stage,Species) %>% count() %>% group_by(Species) %>% filter(n==max(n)) %>% pull(Tag_ID) %>% c("1018")
 billy <- "898"
 
+most_tags_by_sp <- ind_d  %>% 
+  group_by(Tag_ID,Life_Stage,Species) %>% 
+  count() %>% 
+  group_by(Species) %>% 
+  filter(n==max(n)) %>% 
+  pull(Tag_ID) %>% 
+  c("1018",billy)
 
 ind_d <- ind_d %>% 
   filter(Tag_ID %in% c(billy,most_tags_by_sp)) %>% 
   mutate(tagcode=case_when(Ch=="3" ~ paste0("149.360 ", Code),
-                           #Ch=="4" ~ paste0("149.440 ", Code),
+                          #Ch=="4" ~ paste0("149.440 ", Code),
                            Ch=="5" ~ paste0("149.400 ", Code)),
-         fish_name=paste0(Species," ",tagcode)) #Billy the Bull Trout", paste0(Species," #",Tag_ID)))
+         fish_name=paste0(Species," ",tagcode))
 
 
 # Tag sites but no lat-longs for Haul records
 # d_opr %>% filter(Type=="Haul") %>% 
 #   distinct(Tag_Site)
-  
+
+# Seasonal data ####  
 d2 <- d %>%
   left_join(zone_coord_lut,by="Zone_No") %>%
   # snap mobile dets to zone river segment centriods in zone_coord_lut
@@ -115,8 +122,8 @@ d_week <- d2 %>%
   rename(Time=WkYr,
          Timestart=weekstart)
 
-d_seas <- lst(d_month, d_week)
-n_seas <- lst(n_month, n_week)
+d_seas <- lst(Monthly=d_month, Weekly=d_week)
+n_seas <- lst(Monthly=n_month, Weekly=n_week)
 # d2 %>% mutate(weekstart=floor_date(Last_Datetime,unit="week")) %>% View()
 #   group_by(Species, Life_Stage, Detect_Site, week, Detect_Year, MoYr,Latitude, Longitude) %>% 
 #   count() %>%
@@ -138,3 +145,4 @@ n_seas <- lst(n_month, n_week)
 #   mutate(MoYr=paste0(month," ",Detect_Year)) %>% 
 #   rename(count_n=n)
 
+save(list = c("location_pts","peace_network","ind_d","d_seas","n_seas"),file = "data/app_data.rda")

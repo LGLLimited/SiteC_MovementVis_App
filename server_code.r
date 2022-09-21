@@ -3,7 +3,7 @@ server <- function(input, output, session) {
   
 # Basemap parameters ####
   
-  basemap <- reactive({if_else(input$basemap=="Satellite", "Esri.WorldImagery","Esri.WorldStreetMap")})
+  basemap <- reactive({if_else(input$basemap=="Satellite", "Esri.WorldImagery", "Esri.WorldStreetMap")})
   
   fps <- reactive({case_when(input$anim_speed=="Slowest" ~ 2000,
                              input$anim_speed=="Slower"  ~ 1500,
@@ -58,8 +58,7 @@ server <- function(input, output, session) {
     `Movement`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "lightgray", iconColor = "black")
   )
 
-  output$plot_desc <- #reactive({
-    renderText({
+  output$plot_desc <- renderText({
     req(input$tabs)
     if(input$tabs=="Individual Movements"){
       text <- "This plot animates detections of tagged individuals through time. 
@@ -112,8 +111,9 @@ server <- function(input, output, session) {
   
     dataset <- reactive({
       req(input$interval)
-      d <-  if(input$interval=="Monthly"){1}else{2}
-      d_seas[[d]]
+      
+      d_seas[[input$interval]]
+      
       })
  
 dat1 <-  reactive({
@@ -138,10 +138,9 @@ filterTime <- reactive({
   
 n <- reactive({
   req(input$species,input$month,input$interval)
-  if(input$interval=="Monthly"){
-  n_month %>% dplyr::filter(Species==input$species, Time==input$month, Life_Stage==input$lifestage) %>% pull(n)
-   }else{
-  n_week %>% dplyr::filter(Species==input$species, Time==input$month, Life_Stage==input$lifestage) %>% pull(n) }
+  n_seas[[input$interval]] %>% 
+    dplyr::filter(Species==input$species, Time==input$month, Life_Stage==input$lifestage) %>% 
+    pull(n)
   })
 
 #sp_title <-  reactive({
@@ -235,7 +234,7 @@ map_title_tag <-  tags$style(HTML("
     if(input$tabs=="Individual Movements"){
       selectInput("fish","Select individual.", choices=sort(unique(ind_d$fish_name)), selected = "Bull Trout 149.360 496")
     }else{
-      selectInput("species","Select species.",choices=unique(d2$Species), selected="Bull Trout")
+      selectInput("species","Select species.",choices=unique(dataset()$Species), selected="Bull Trout")
     }
   })
   
