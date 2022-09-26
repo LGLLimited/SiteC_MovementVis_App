@@ -48,20 +48,19 @@ data_description <- function(){
 HTML('
   <p>
   <h2>Background</h2>
-  Since 2019, BC Hydro has tagged six species with radio transmitters to assess movement patterns in the Peace River and its tributaries. 
-  Study species include Bull Trout, Arctic Grayling, Rainbow Trout, Walleye, Mountain Whitefish and Burbot. 
+  Since 2019, BC Hydro has tagged six fish species (Bull Trout, Arctic Grayling, Rainbow Trout, Walleye, Mountain Whitefish and Burbot) with radio transmitters to assess movement patterns in the Peace River and its tributaries. 
   Tagged fish are detected at an array of fixed receivers located throughout the Peace River and its tributaries (see Map tab) as well as during mobile surveys by fixed-wing aircraft or helicopter.
   Fixed receivers are operated from April through October and data are downloaded monthly. 
   Mobile surveys target Arctic Grayling in the Moberly River from May to June and Bull Trout in the Halfway River from August to September to identify likely spawning locations and movement timing. 
   Mobile surveys are also conducted throughout the watershed several times during winter months to supplement detection data while the majority of the fixed-receiver array is offline. 
-  Additional information on the BC Hydro Site C Fish Tracking Program can be found in the
+  Additional information on the Site C Fish Movement Assessment can be found in the
   <a href="https://sitecproject.com/sites/default/files/fish-tracking-brochure.pdf" target="_blank"> Site C Fish Tracking Brochure</a>
-  or
+  and
   <a href="https://www.sitecproject.com/sites/default/files/fish-tracking-notification-2022.pdf" target="_blank"> 2022 Fish Tracking Notification</a>.
   </p> 
   <p>
   <h2> About this Shiny App </h2>
-  Two visualizations of the detection data are provided on the Plots tab. The <b>Individual Movements</b> tab plots detection locations for an individual fish through time. The <b>Seasonal Distribution</b> tab
+  Two visualizations of the detection data are provided on the Plots tab. The <b>Individual Movements</b> tab plots detection locations for select individual fish through time. The <b>Seasonal Distribution</b> tab
   shows counts of unique individuals at detection locations during either weekly or monthly time intervals with circles sized proportionally to the number of individuals detected. 
   Detection locations are colored to distinguish release locations, detections at fixed stations, and mobile survey detections.
   </p>
@@ -70,6 +69,8 @@ HTML('
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2019-Annual-Report.pdf" target="_blank">2019</a>
   <br>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2020-Annual-Report.pdf" target="_blank">2020</a>
+  <br>
+  <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank">2021</a>
   ')
 }
 

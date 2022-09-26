@@ -1,6 +1,6 @@
 # UI ####
 ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width="100px",style="float: right;"),
-                           windowTitle="Site C Fish Movement"),
+                           windowTitle="Site C Fish Movement Assessment"),
                 tabsetPanel(id="main",
                             tabPanel("Info",
                                      fluidPage(

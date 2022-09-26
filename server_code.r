@@ -30,7 +30,7 @@ server <- function(input, output, session) {
   output$map1 <- renderLeaflet({make_map(basemap,plot_desc, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-                labels=c("Site C - Pre-diversion","Site C - Diverted"),
+                labels=c("Site C - Pre-Diversion","Site C - Diverted"),
                 opacity=1, 
                 position = "topright") 
     })
@@ -147,7 +147,7 @@ n <- reactive({
  # tags$div(map_title_tag, HTML(input$lifestage, input$species))})
   
 seas_title <- reactive({
-    tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>",paste0("Number of tagged fish= ",n())))})
+    tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>", paste0("Number of tagged fish = ",n())))})
   
 colors <- reactive({
     req(input$basemap)
