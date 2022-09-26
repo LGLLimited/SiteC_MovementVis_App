@@ -8,8 +8,8 @@ make_map <- function(basemap,plot_desc, peace_network, location_pts){
               lng2=-117.88295361,
               lat2=54.27808912) %>%
     addPolylines(data = peace_network,
-                 opacity=case_when(basemap()=="Esri.WorldImagery"~0.4,
-                                   TRUE ~ 0.2),
+                 opacity=case_when(basemap()=="Esri.WorldImagery"~0.5,
+                                   TRUE ~ 0.3),
                  label = ~StreamName,
                  weight = ~if_else(lwd=="Peace",8,2),
                  labelOptions = labelOptions(textOnly = TRUE, noHide = FALSE,textsize = 12,direction = 'top',style=list("color"=if_else(basemap()=="Esri.WorldImagery","white","black"))),
