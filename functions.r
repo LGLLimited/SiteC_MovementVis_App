@@ -2,7 +2,7 @@ make_map <- function(basemap,plot_desc, peace_network, location_pts){
   leaflet(options=leafletOptions(minZoom=7, maxZoom=13, zoomControl=FALSE)) %>%
     onRender("function(el,x) {
              L.control.zoom({ position:'bottomright' }).addTo(this)}") %>% 
-    setView(lng=-120.9141, lat=  56.19851, zoom=7.4) %>%
+    setView(lng=-120.9141, lat=  56.19851, zoom=8.4) %>%
     setMaxBounds(lng1=-124.12656439,
               lat1=57.64047692,
               lng2=-117.88295361,
@@ -34,7 +34,7 @@ make_map <- function(basemap,plot_desc, peace_network, location_pts){
 }
 
 center_map <- function(map_id){
-  leafletProxy(map_id) %>% setView(lng=-120.9141, lat=  56.19851, zoom=7.4)
+  leafletProxy(map_id) %>% setView(lng=-120.9141, lat=  56.19851, zoom=8.4)
 }
 
 # addLegendCustom <- function(map, colors, labels, sizes, opacity = 0.75){
