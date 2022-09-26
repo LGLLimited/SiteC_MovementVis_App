@@ -53,9 +53,9 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
       tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
       tabsetPanel(id="tabs",
         tabPanel("Individual Movements",
-                mainPanel(leafletOutput("map1", width = "85vh", height = "85vh"))),
+                mainPanel(leafletOutput("map1", width = "145vh", height = "85vh"))),
         tabPanel("Seasonal Distribution",
-                mainPanel(leafletOutput("map2",height="85vh",width = "85vh")))
+                mainPanel(leafletOutput("map2",width = "145vh",height="85vh")))
                 )
              )
         )
