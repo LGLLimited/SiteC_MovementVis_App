@@ -11,6 +11,7 @@ make_map <- function(basemap,plot_desc, peace_network, location_pts){
                  opacity=case_when(basemap()=="Esri.WorldImagery"~0.4,
                                    TRUE ~ 0.2),
                  label = ~StreamName,
+                 weight = ~if_else(lwd=="Peace",8,2),
                  labelOptions = labelOptions(textOnly = TRUE, noHide = FALSE,textsize = 12,direction = 'top',style=list("color"=if_else(basemap()=="Esri.WorldImagery","white","black"))),
                  group="Rivers",
                  highlightOptions = highlightOptions(bringToFront = TRUE, weight = 5,color ='#1c8eff', sendToBack = FALSE)) %>%
