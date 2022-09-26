@@ -105,7 +105,7 @@ server <- function(input, output, session) {
                 labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
                 colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1) %>% 
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-                labels=c("Site C - Pre-diversion","Site C - Diverted"),
+                labels=c("Site C - Pre-Diversion","Site C - Diverted"),
                 opacity = 1)
     })
   
