@@ -202,7 +202,7 @@ map_title_tag <-  tags$style(HTML("
     transform: translate(-50%,20%);
     position: relative !important;
     left: 50%;
-    width: 250px;
+    width: 275px;
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
