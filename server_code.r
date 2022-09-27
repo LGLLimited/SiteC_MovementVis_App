@@ -27,7 +27,7 @@ server <- function(input, output, session) {
   # 
 # Individual Map Params ####
   
-  output$map1 <- renderLeaflet({make_map(basemap,plot_desc, peace_network, location_pts) %>% 
+  output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") %>%  
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
                 labels=c("Site C - Pre-Diversion","Site C - Diverted"),
@@ -70,7 +70,7 @@ server <- function(input, output, session) {
       text
     #tags$div(map_desc_tag,HTML(text))
   })
-  
+
   observeEvent({input$index
     input$basemap
     input$tabs}, {
@@ -100,15 +100,20 @@ server <- function(input, output, session) {
 # Seasonal Map Params ####
   
   output$map2 <- renderLeaflet({
-    make_map(basemap, plot_desc, peace_network, location_pts) %>% 
-      addLegend(title = "Detection Type",
-                labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
-                colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1) %>% 
+    req(!is.null(input$det_type))
+    map <- make_map(basemap, peace_network, location_pts) %>% 
       addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
                 labels=c("Site C - Pre-Diversion","Site C - Diverted"),
                 opacity = 1)
-    })
-  
+   if(input$det_type){
+     map %>%
+      addLegend(title = "Detection Type",
+                labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
+                colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1)}
+    else{map}
+    
+  })
+
     dataset <- reactive({
       req(input$interval)
       
@@ -150,16 +155,19 @@ seas_title <- reactive({
     tags$div(map_title_tag,HTML(input$lifestage, input$species,"<br>",input$month,"<br>", paste0("Number of tagged fish = ",n())))})
   
 colors <- reactive({
-    req(input$basemap)
-    if(input$basemap=="Terrain"){
+  req(input$basemap,!is.null(input$det_type))
+  if(input$det_type){
+    # if(input$basemap=="Terrain"){
+    #   c("#1aeb02","#ff9305","#ff66fc")#"#ff9305")
+    # }else{
       c("#1aeb02","#ff9305","#ff66fc")#"#ff9305")
-    }else{
-      c("#1aeb02","#ff9305","#ff66fc")#"#ff9305")
-     # c("#1aeb02","#ff66fc","#f0ea4d")
-    }
-  })
+      # c("#1aeb02","#ff66fc","#f0ea4d")
+  } else if (input$basemap=="Terrain"){c("blue","blue","blue")}else{c("yellow","yellow","yellow")}
+})
+  
   
   observeEvent({filterTime()
+                colors()
                 input$basemap
                 input$tabs
                 }, 
@@ -242,13 +250,14 @@ map_title_tag <-  tags$style(HTML("
     if(input$tabs=="Seasonal Distribution"){
       tagList(
         selectInput("lifestage","Select life stage.", choices=choices$lifestage),
-        selectInput("interval","Select time step.",choices=c("Monthly", "Weekly"), selected="Monthly")
-        )
-        
-        } 
+        selectInput("interval","Select time step.",choices=c("Monthly", "Weekly"), selected="Monthly"),
+        checkboxInput("det_type",HTML("<b>Show detections by type.</b>"),value = FALSE)
+      )
+      
+    } 
     else {NULL}
     
-    })
+  })
 
   output$dateUI <- renderUI({
     if(input$tabs=="Individual Movements"){

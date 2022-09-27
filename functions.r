@@ -1,4 +1,4 @@
-make_map <- function(basemap,plot_desc, peace_network, location_pts){
+make_map <- function(basemap, peace_network, location_pts){
   leaflet(options=leafletOptions(minZoom=7, maxZoom=13, zoomControl=FALSE)) %>%
     onRender("function(el,x) {
              L.control.zoom({ position:'bottomright' }).addTo(this)}") %>% 
@@ -27,11 +27,7 @@ make_map <- function(basemap,plot_desc, peace_network, location_pts){
                      label = ~StreamName,
                      labelOptions = labelOptions(direction = 'top'),
                      radius=5) %>%
-    addScaleBar(position=c("bottomright"), options=scaleBarOptions(imperial = FALSE)) #%>% 
-    # addControl(layerId="plot_desc",
-    #            html=plot_desc(),
-    #            className='map-desc',
-    #            position='topleft')
+    addScaleBar(position=c("bottomright"), options=scaleBarOptions(imperial = FALSE))
 }
 
 center_map <- function(map_id){

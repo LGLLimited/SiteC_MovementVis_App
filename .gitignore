@@ -15,4 +15,4 @@ data_operational_10Feb22.rds
 billy.mp4
 run_app.r
 server.r
-data/mobile_zone_midpoints_new.csv
+data/.gitignore
