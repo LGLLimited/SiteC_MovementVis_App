@@ -3,13 +3,15 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <- readRDS("data/data_operational_10Feb22.rds")
+d_opr <- readRDS("data/data_operational_20220923.rds") %>% as_tibble()
 
+#d_opr <- readRDS("data/data_operational_10Feb22.rds")
 d <- d_opr %>% 
   filter(Type %in% c("Release", "Station", "Mobile","Haul"),
-         ! Species %in% c("TBD","Unknown")) %>% 
+         ! Species %in% c("TBD","Unknown","Place Holder", "Mainstreams 2008 fish")) %>% 
   filter((!is.na(Latitude) & !is.na(Longitude))) %>% 
-  mutate(Life_Stage=if_else(Life_Stage=="adult","Adult",Life_Stage))
+  mutate(Life_Stage=if_else(Life_Stage=="adult"|Life_Stage==0,"Adult",Life_Stage)) %>%
+  filter(between(date(First_Datetime), ymd("2019-04-01"), ymd("2022-08-31")))
 
 # Map data ####
 det_sites <- d %>% 
@@ -21,14 +23,14 @@ det_sites <- d %>%
 peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>% 
   st_transform(4326) %>% 
   st_zm() %>% 
-  filter(StreamName %in% c("Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
+  filter(StreamName %in% c("Unnamed Creek","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
 location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>% 
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
 
-zone_coord_lut <- read_csv("data/mobile_zone_midpoints.csv",show_col_types = FALSE) %>% 
+zone_coord_lut <- read_csv("data/mobile_zone_midpoints_new.csv",show_col_types = FALSE) %>% 
   rename(ZoneLat=Latitude, 
          ZoneLong=Longitude)
 
@@ -39,7 +41,6 @@ ind_d <- d  %>% #filter(Tag_ID==898)
   pivot_longer(cols = c(First_Datetime,Last_Datetime), names_to = "FirstLast", values_to = "Datetime") %>% 
   mutate(Present=TRUE, 
          yr=year(Datetime)) %>% 
-  filter(between(yr,2019,2021)) %>%
   distinct(Tag_ID, Ch,Code,Species, Life_Stage, Detect_Site, Latitude,Longitude,Datetime,Present,yr) %>% 
   arrange(Tag_ID, Datetime) %>% 
   nest(data=-Tag_ID) %>% 
@@ -48,7 +49,9 @@ ind_d <- d  %>% #filter(Tag_ID==898)
             mutate(haul=if_else(lag(Detect_Site, 1)=="HAUL" | lead(Detect_Site, 1)=="HAUL", "Hauled", "Movement") %>% 
                      replace_na("Movement")))) %>% 
   unnest(data) %>% 
-  filter(Latitude!=0&Longitude!=0)
+  filter(Latitude!=0&Longitude!=0) %>% 
+  #Force MST to UTC
+  mutate(Datetime=floor_date(force_tz(Datetime,"UTC"),unit = 'second')) # convert data from MST with milliseconds to UTC with seconds
 
 #ind_d %>% filter(Tag_ID==1018)
 
@@ -75,17 +78,16 @@ ind_d <- ind_d %>%
 #   distinct(Tag_Site)
 
 # Seasonal data ####  
-d2 <- d %>%
-  left_join(zone_coord_lut,by="Zone_No") %>%
+d2 <- d %>% #distinct(Zone_No)
+  left_join(zone_coord_lut,by="Zone_No") %>% 
   # snap mobile dets to zone river segment centriods in zone_coord_lut
   mutate(Latitude=if_else(Type=="Mobile",ZoneLat, Latitude),
          Longitude=if_else(Type=="Mobile",ZoneLong, Longitude),
          month=month(Last_Datetime,label = TRUE,abbr = FALSE),
          week=week(Last_Datetime)) %>%
-    filter(Detect_Year %in% c("2019","2020","2021"), month %in% month.name[4:10]) %>% 
+    filter(Detect_Year %in% c("2019","2020","2021","2022"), month %in% month.name[4:10]) %>% 
   distinct(Tag_ID, Type, Species, Life_Stage, Detect_Site, month, Last_Datetime, Detect_Year, Latitude, Longitude) %>%
-  mutate(#month=factor(month,levels=month.name[4:10],ordered = TRUE),
-         weekstart=floor_date(Last_Datetime,"week"),
+  mutate(weekstart=floor_date(Last_Datetime,"week"),
          monthstart=floor_date(Last_Datetime,"month")) %>%
     mutate(MoYr=format(monthstart, "%B %Y"),
            WkYr=format(weekstart, "%b %d %Y")) %>% 
@@ -124,25 +126,6 @@ d_week <- d2 %>%
 
 d_seas <- lst(Monthly=d_month, Weekly=d_week)
 n_seas <- lst(Monthly=n_month, Weekly=n_week)
-# d2 %>% mutate(weekstart=floor_date(Last_Datetime,unit="week")) %>% View()
-#   group_by(Species, Life_Stage, Detect_Site, week, Detect_Year, MoYr,Latitude, Longitude) %>% 
-#   count() %>%
-#   ungroup() %>% 
-#   arrange(Detect_Year,week) %>% filter(Species=="Arctic Grayling") #%>% View()
-# d2 <- d %>%
-#   left_join(zone_coord_lut,by="Zone_No") %>% 
-#   # snap mobile dets to zone river segment centriods in zone_coord_lut
-#   mutate(Latitude=if_else(Type=="Mobile",ZoneLat, Latitude),
-#          Longitude=if_else(Type=="Mobile",ZoneLong, Longitude)) %>% 
-#   distinct(Tag_ID, Type, Species, Life_Stage, Detect_Site, Last_Datetime, Detect_Year, Latitude, Longitude) %>% 
-#   group_by(Species,Life_Stage,Detect_Site, month=month(Last_Datetime,label = TRUE,abbr = FALSE), Detect_Year, Latitude, Longitude) %>% 
-#   count() %>% 
-#   ungroup() %>% 
-#   mutate(month=factor(month,levels=c("April","May","June","July","August","September","October"))) %>%  
-#   filter(Detect_Year %in% c("2019","2020","2021"), month %in% month.name[4:10]) %>% 
-#   mutate(date=mdy(paste0(month,"-1-",Detect_Year))) %>% 
-#   arrange(date) %>% 
-#   mutate(MoYr=paste0(month," ",Detect_Year)) %>% 
-#   rename(count_n=n)
+
 
 save(list = c("location_pts","peace_network","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
