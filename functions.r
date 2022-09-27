@@ -65,14 +65,19 @@ HTML('
   shows counts of unique individuals at detection locations during either weekly or monthly time intervals with circles sized proportionally to the number of individuals detected. 
   Detection locations are colored to distinguish release locations, detections at fixed stations, and mobile survey detections.
   </p>
-  <br>
- <h2> Annual Reports </h2>
+  <p>
+  <h2> Acknowledgement </h2>
+  We acknowledge this research was conducted on the traditional territory of Treaty 8 First Nations of Dunne Zaa, Cree, and Tse’khene cultural descent. 
+  </p>
+  <p>
+  <h2> Annual Reports </h2>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2019-Annual-Report.pdf" target="_blank">2019</a>
   <br>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2020-Annual-Report.pdf" target="_blank">2020</a>
   <br>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank">2021</a>
-  ')
+  </p>
+ ')
 }
 
 # "<h2>Individual Movements</h2>
