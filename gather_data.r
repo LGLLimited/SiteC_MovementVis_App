@@ -26,6 +26,9 @@ peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>%
   filter(StreamName %in% c("Unnamed Creek","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
+receivers <- st_read(dsn='./data',layer="fixed_stations",quiet=TRUE) %>% mutate(lon=st_coordinates(.)[,1],
+                                                                                lat=st_coordinates(.)[,2]) %>% st_set_geometry(NULL)
+
 location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>% 
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
@@ -128,4 +131,4 @@ d_seas <- lst(Monthly=d_month, Weekly=d_week)
 n_seas <- lst(Monthly=n_month, Weekly=n_week)
 
 
-save(list = c("location_pts","peace_network","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
+save(list = c("location_pts","peace_network","receivers","ind_d","d_seas","n_seas"),file = "data/app_data.rda")

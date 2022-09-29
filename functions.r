@@ -1,5 +1,5 @@
 make_map <- function(basemap, peace_network, location_pts){
-  leaflet(options=leafletOptions(minZoom=7, maxZoom=13, zoomControl=FALSE)) %>%
+  leaflet(options=leafletOptions(minZoom=7, maxZoom=11, zoomControl=FALSE)) %>%
     onRender("function(el,x) {
              L.control.zoom({ position:'bottomright' }).addTo(this)}") %>% 
     setView(lng=-120.9141, lat=  56.19851, zoom=8.4) %>%
@@ -7,16 +7,20 @@ make_map <- function(basemap, peace_network, location_pts){
               lat1=57.64047692,
               lng2=-117.88295361,
               lat2=54.27808912) %>%
+    addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
+              labels=c("Site C - Pre-Diversion","Site C - Diverted"),
+              opacity=1, 
+              position = "topright") %>% 
+    addProviderTiles(isolate(basemap()),layerId = 'base') %>%
     addPolylines(data = peace_network,
-                 opacity=case_when(basemap()=="Esri.WorldImagery"~0.5,
+                 opacity=case_when(isolate(basemap())=="Esri.WorldImagery"~0.5,
                                    TRUE ~ 0.3),
                  label = ~StreamName,
                  weight = ~if_else(lwd=="Peace",8,2),
-                 labelOptions = labelOptions(textOnly = TRUE, noHide = FALSE,textsize = 12,direction = 'top',style=list("color"=if_else(basemap()=="Esri.WorldImagery","white","black"))),
+                 labelOptions = labelOptions(textOnly = TRUE, noHide = FALSE,textsize = 12,direction = 'top',style=list("color"=if_else(isolate(basemap())=="Esri.WorldImagery","white","black"))),
                  group="Rivers",
                  highlightOptions = highlightOptions(bringToFront = TRUE, weight = 5,color ='#1c8eff', sendToBack = FALSE)) %>%
-    groupOptions("Rivers",zoomLevels = 7:10) %>% 
-    addProviderTiles(basemap()) %>%
+    #groupOptions("Rivers",zoomLevels = 7:10) %>% 
     addCircleMarkers(data=location_pts,
                      lng=~long,
                      lat=~lat,

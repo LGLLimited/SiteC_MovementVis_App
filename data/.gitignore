@@ -1,2 +1,8 @@
 data_operational_20220923.rds
 mobile_zone_midpoints_new.csv
+fixed_stations.cpg
+fixed_stations.dbf
+fixed_stations.prj
+fixed_stations.qmd
+fixed_stations.shp
+fixed_stations.shx

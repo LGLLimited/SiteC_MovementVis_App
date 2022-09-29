@@ -39,10 +39,12 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                                        hr(),
                                        radioButtons("basemap", "Select basemap.", choices = c("Terrain", "Satellite"), selected = "Terrain"),
                                        actionButton("center_map", "Re-center Map"),
-                                       br(),
+                                       checkboxInput("receivers",label=HTML("<b>Show fixed-station receivers.</b>"),value=FALSE),
+                                       #br(),
                                        br(),
                                        uiOutput("choiceUI"),
                                        uiOutput("lifestageUI"),
+                                       
                                        br(),
                                        sliderTextInput("anim_speed","Select animation speed.",choices = c("Slowest","Slower","Faster","Fastest"), selected ="Faster",grid = TRUE),
                                        br(),
