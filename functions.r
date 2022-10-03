@@ -8,7 +8,8 @@ make_map <- function(basemap, peace_network, location_pts){
               lng2=-117.88295361,
               lat2=54.27808912) %>%
     addLegend(colors=paste0(c('white','black'),";border:2px solid black; border-radius: 50%; width:",12,"px; height:",12,"px;"),
-              labels=c("Site C - Pre-Diversion","Site C - Diverted"),
+              title = "Site C",
+              labels=c("Pre-Diversion","Diverted"),
               opacity=1,
               position = "topright") %>% 
     addProviderTiles(isolate(basemap()),layerId = 'base') %>%

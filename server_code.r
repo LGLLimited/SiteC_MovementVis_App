@@ -179,7 +179,7 @@ dat <- reactive({
   req(input$lifestage)
   dat1() %>% filter(Life_Stage==input$lifestage) %>% 
     # Point radius on map- scale n from 5px to 30 px max
-    mutate(radius=((n-min(n)) / (max(n)-min(n))) *(30-5) + 5)
+    mutate(radius=((n-min(n)) / (max(n)-min(n))) *(40-8) + 8)
   })
 
 filterTime <- reactive({
