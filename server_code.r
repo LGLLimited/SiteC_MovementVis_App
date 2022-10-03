@@ -27,8 +27,7 @@ server <- function(input, output, session) {
   # 
 # Individual Map Params ####
   
-  output$map1 <- renderLeaflet({make_map(basemap, peace_network, 
-                                         location_pts) %>% 
+  output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") 
     })
 
