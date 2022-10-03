@@ -13,6 +13,7 @@ server <- function(input, output, session) {
                              input$anim_speed=="Fastest" ~ 500)
   })
   
+  observe(center_map(map()))
   
   observeEvent(input$center_map, {
     center_map(map())
