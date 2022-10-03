@@ -61,7 +61,7 @@ server <- function(input, output, session) {
   
   # Receiver observer ####
   observe({
-    color <- if_else(input$basemap=="Terrain","#248708","white")
+    color <- if_else(input$basemap=="Terrain","#545353","white")
     
     if(input$receivers){
       leafletProxy(map()) %>% 
