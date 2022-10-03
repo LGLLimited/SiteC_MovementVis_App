@@ -30,28 +30,13 @@ server <- function(input, output, session) {
   output$map1 <- renderLeaflet({make_map(basemap, peace_network, 
                                          location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") 
-      #%>%  
-      # addLegend(colors=paste0(c('black','red'),"; border-radius: 50%; width:",10,"px; height:",10,"px;"),
-      #           labels=c("Site C - Pre-Diversion","Site C - Diverted"),
-      #           opacity=1, 
-      #           position = "topright") %>% 
-      # addProviderTiles(isolate(basemap()),layerId = 'base') %>%
-      # addPolylines(data = peace_network,
-      #              opacity=case_when(isolate(basemap())=="Esri.WorldImagery"~0.5,
-      #                                TRUE ~ 0.3),
-      #              label = ~StreamName,
-      #              weight = ~if_else(lwd=="Peace",8,2),
-      #              labelOptions = labelOptions(textOnly = TRUE, noHide = FALSE,textsize = 12,direction = 'top',style=list("color"=if_else(isolate(basemap())=="Esri.WorldImagery","white","black"))),
-      #              group="Rivers",
-      #              highlightOptions = highlightOptions(bringToFront = TRUE, weight = 5,color ='#1c8eff', sendToBack = FALSE)) %>%
-      # groupOptions("Rivers",zoomLevels = 7:10)
     })
 
   # Basemap observer ####  
   observe({ 
-   # map <- if_else(input$tabs=="Individual Movements","map1","map2")
-    leafletProxy(map())  %>% addProviderTiles(basemap(),layerId = "base") %>% 
-      clearGroup("Rivers") %>% #clearGroup("fish") %>%
+    leafletProxy(map())  %>% 
+      addProviderTiles(basemap(),layerId = "base") %>% 
+      clearGroup("Rivers") %>% 
       addPolylines(data = peace_network,
                    opacity=case_when(basemap()=="Esri.WorldImagery"~.6, TRUE ~ 0.3),
                    label = ~StreamName,
@@ -77,8 +62,8 @@ server <- function(input, output, session) {
   
   # Receiver observer ####
   observe({
-    #map <- if_else(input$tabs=="Individual Movements","map1","map2")
     color <- if_else(input$basemap=="Terrain","#248708","white")
+    
     if(input$receivers){
       leafletProxy(map()) %>% 
       addCircleMarkers(data=receivers,group="receivers",color = color, lng = ~lon,lat = ~lat,label=~dp_StatnNm,radius = 1,opacity=1) %>% 
@@ -222,15 +207,15 @@ colors <- reactive({
   } else if (input$basemap=="Terrain"){c("blue","blue","blue")}else{c("yellow","yellow","yellow")}
 })
 
-  
   observeEvent({filterTime()
                 colors()
                 input$basemap
                 input$tabs
-                }, 
-  {
+                }, {
+                  
 pal <- colorFactor(colors(),
-                   levels=factor(c("Release","Station","Mobile"),levels = c("Release","Station","Mobile")),ordered = TRUE)
+                   levels=factor(c("Release","Station","Mobile"),levels = c("Release","Station","Mobile")),
+                   ordered = TRUE)
                          
       leafletProxy("map2") %>%
         clearGroup("fish") %>%
@@ -278,22 +263,6 @@ map_title_tag <-  tags$style(HTML("
   }
 "))
   
-#   map_desc_tag <-  tags$style(HTML("
-#   .leaflet-control.map-desc{
-#     transform: translate(-51%,-1%);
-#     position: relative !important;
-#     left: 50%;
-#     width:400px;
-#     text-align: left;
-#     padding-left: 5px;
-#     padding-right: 5px;
-#     background: rgba(255,255,255,.75);
-#     font-weight: normal;
-#     font-size: 14px;
-#   }
-# "))
-  
-
 # UI outputs ####  
   
   output$choiceUI <- renderUI({
