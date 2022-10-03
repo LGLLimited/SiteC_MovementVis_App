@@ -177,7 +177,9 @@ observeEvent(input$species, {
 
 dat <- reactive({
   req(input$lifestage)
-  dat1() %>% filter(Life_Stage==input$lifestage)
+  dat1() %>% filter(Life_Stage==input$lifestage) %>% 
+    # Point radius on map- scale n from 5px to 30 px max
+    mutate(radius=((n-min(n)) / (max(n)-min(n))) *(30-5) + 5)
   })
 
 filterTime <- reactive({
@@ -226,7 +228,7 @@ pal <- colorFactor(colors(),
                          stroke=FALSE,
                          label = paste0("",filterTime()$n), # causes crash when changing species found the paste0("") solution on SO:https://gis.stackexchange.com/questions/333997/error-while-rendering-leaflet-map-on-shiny
                          fillColor = ~pal(Type),#if_else(input$basemap=="Terrain",'blue',"#f0ea4d"),
-                         radius = ~suppressWarnings(((n/max(n))*20)+5)) %>% # would throw warnings when switching certain species
+                         radius = ~radius) %>% #~suppressWarnings(((n/max(n))*20)+5)) %>% # would throw warnings when switching certain species
         addCircleMarkers(layerId="points",
                          data=location_pts,
                          lng=~long,
