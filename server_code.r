@@ -106,7 +106,7 @@ server <- function(input, output, session) {
       The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility."
     }else{
       text <- "This plot animates counts of tagged individuals at each detection location through time at the selected time step. 
-      The size of the circle is proportional to the number of unique individuals detected at a location. Circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
+      The size of the circle is proportional to the number of unique individuals detected at a location. If <b>Show detections by type</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
     }
       text
     #tags$div(map_desc_tag,HTML(text))
