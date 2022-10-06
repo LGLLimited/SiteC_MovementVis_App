@@ -41,23 +41,22 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                                        actionButton("center_map", "Re-center Map"),
                                        checkboxInput("receivers",label=HTML("<b>Show fixed-station receivers.</b>"),value=FALSE),
                                        #br(),
-                                       br(),
+                                       #br(),
                                        uiOutput("choiceUI"),
                                        uiOutput("lifestageUI"),
-                                       
-                                       br(),
+                                       #br(),
                                        sliderTextInput("anim_speed","Select animation speed.",choices = c("Slowest","Slower","Faster","Fastest"), selected ="Faster",grid = TRUE),
-                                       br(),
+                                       #br(),
                                        uiOutput("dateUI"),
                                        ),
                                           fluidRow(HTML("<b>Plot description.</b>"),htmlOutput("plot_desc"))),
-    mainPanel(
+    mainPanel(width=9,
       tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
       tabsetPanel(id="tabs",
         tabPanel("Individual Movements",
-                mainPanel(leafletOutput("map1", width = "150vh", height = "85vh"))),
+                mainPanel(leafletOutput("map1",width="71vw",height="87vh"))),
         tabPanel("Seasonal Distribution",
-                mainPanel(leafletOutput("map2",width = "150vh",height="85vh")))
+                mainPanel(leafletOutput("map2",width="71vw",height="87vh")))
                 )
              )
         )
