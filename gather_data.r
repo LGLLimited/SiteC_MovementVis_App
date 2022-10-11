@@ -16,7 +16,7 @@ d <- d_opr %>%
   mutate(Life_Stage=if_else(Life_Stage=="adult"|Life_Stage==0,"Adult",Life_Stage)) %>%
   filter(between(date(First_Datetime), min_date, max_date))
 
-
+# Date for ui text
 max_data_date <- format(max_date,"%B %d, %Y")
       
 # Map data ####
