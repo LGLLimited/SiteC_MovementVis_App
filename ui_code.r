@@ -49,7 +49,7 @@ ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width
                                        #br(),
                                        uiOutput("dateUI"),
                                        ),
-                                          fluidRow(HTML("<b>Plot description.</b>"),htmlOutput("plot_desc"))),
+                                       fluidRow(HTML("<b>Plot description.</b>"), htmlOutput("plot_desc"),br(),textOutput("data_desc"))),
     mainPanel(width=9,
       tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
       tabsetPanel(id="tabs",

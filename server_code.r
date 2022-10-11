@@ -1,6 +1,8 @@
 
 server <- function(input, output, session) {
   
+  output$data_desc <- renderText(paste0("Data current as of ",max_data_date,"."))
+  
 # Basemap parameters ####
   
   basemap <- reactive({if_else(input$basemap=="Satellite", "Esri.WorldImagery", "Esri.WorldStreetMap")})
@@ -108,7 +110,7 @@ server <- function(input, output, session) {
       The size of the circle is proportional to the number of unique individuals detected at a location. If <b>Show detections by type</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
     }
       text
-    #tags$div(map_desc_tag,HTML(text))
+  
   })
 
   observeEvent({input$index

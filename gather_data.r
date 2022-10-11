@@ -5,14 +5,20 @@ library(sf)
 # Operational data ####
 d_opr <- readRDS("data/data_operational_20220923.rds") %>% as_tibble()
 
+min_date <- ymd("2019-04-01")
+max_date <- ymd("2022-08-31")
+
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
 d <- d_opr %>% 
   filter(Type %in% c("Release", "Station", "Mobile","Haul"),
          ! Species %in% c("TBD","Unknown","Place Holder", "Mainstreams 2008 fish")) %>% 
   filter((!is.na(Latitude) & !is.na(Longitude))) %>% 
   mutate(Life_Stage=if_else(Life_Stage=="adult"|Life_Stage==0,"Adult",Life_Stage)) %>%
-  filter(between(date(First_Datetime), ymd("2019-04-01"), ymd("2022-08-31")))
+  filter(between(date(First_Datetime), min_date, max_date))
 
+
+max_data_date <- format(max_date,"%B %d, %Y")
+      
 # Map data ####
 det_sites <- d %>% 
   filter(Type %in% c("Station","Release","Haul")) %>% 
@@ -131,4 +137,4 @@ d_seas <- lst(Monthly=d_month, Weekly=d_week)
 n_seas <- lst(Monthly=n_month, Weekly=n_week)
 
 
-save(list = c("location_pts","peace_network","receivers","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
+save(list = c("location_pts","peace_network","receivers","max_data_date","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
