@@ -3,11 +3,15 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <- readRDS("data/data_operational_20220923.rds") %>% as_tibble()
+d_opr <- readRDS("data/data_operational_20220923.rds") %>% 
+  as_tibble() %>% 
+  # records deemed impossible per Nich and Dave
+  filter(!R_ID %in% 3819:3824)
 
 min_date <- ymd("2019-04-01")
 max_date <- ymd("2022-08-31")
 
+d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
 d <- d_opr %>% 
   filter(Type %in% c("Release", "Station", "Mobile","Haul"),
