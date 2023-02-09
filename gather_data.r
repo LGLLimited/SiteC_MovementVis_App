@@ -13,7 +13,7 @@ d_opr <- readRDS("data/data_operational_20230208.rds") %>%
 min_date <- ymd("2019-04-01")
 max_date <- ymd("2022-12-31")
 
-d_opr 
+#d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
 d <- d_opr %>% 
   filter(Type %in% c("Release", "Station", "Mobile","Haul"),
@@ -35,8 +35,9 @@ det_sites <- d %>%
 peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>% 
   st_transform(4326) %>% 
   st_zm() %>% 
-  filter(StreamName %in% c("Unnamed Creek","Needham Creek","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
+  filter(StreamName %in% c("Unnamed Creek","Needham Creek","Pouce Coupe River","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
+
 
 receivers <- st_read(dsn='./data',layer="fixed_stations",quiet=TRUE) %>% mutate(lon=st_coordinates(.)[,1],
                                                                                 lat=st_coordinates(.)[,2]) %>% st_set_geometry(NULL)
@@ -50,7 +51,7 @@ zone_coord_lut <- read_csv("data/mobile_zone_midpoints_new.csv",show_col_types =
          ZoneLong=Longitude)
 
 # Individual data ####
-ind_d <- d  %>% #filter(Tag_ID==898) 
+ind_d <- d  %>% #filter(Species=="Rainbow Trout") %>% #filter(Tag_ID==898) 
   select(Tag_ID,Ch,Code,Life_Stage,Species,Detect_Site,First_Datetime,Last_Datetime,Latitude,Longitude) %>% 
   arrange(First_Datetime) %>% 
   pivot_longer(cols = c(First_Datetime,Last_Datetime), names_to = "FirstLast", values_to = "Datetime") %>% 
@@ -68,20 +69,50 @@ ind_d <- d  %>% #filter(Tag_ID==898)
   #Force MST to UTC
   mutate(Datetime=floor_date(force_tz(Datetime,"UTC"),unit = 'second')) # convert data from MST with milliseconds to UTC with seconds
 
-#ind_d %>% filter(Tag_ID==1018)
 
-billy <- "898"
+# Look at number of sites a fish was detected at and the duration in years from  
+# from first to last detection to pick interesting fish for individual plots- manual process
+# trying to strike a balance between detections at more sites and over a longer duration
 
-most_tags_by_sp <- ind_d  %>% 
+# ind_d %>% 
+#   distinct(Tag_ID,Life_Stage,Species,Detect_Site) %>%
+#   group_by(Tag_ID,Life_Stage,Species) %>% 
+#   count(name = "n_sites") %>% #filter(Species=="Rainbow Trout") %>% arrange(desc(n_sites))
+# inner_join(
+#   ind_d %>% 
+#   group_by(Tag_ID) %>% 
+#   summarize(YearsFirstLast=time_length(max(Datetime)-min(Datetime),'years')), #%>% #filter(Tag_ID==988), #%>% arrange(desc(DateRange)),
+#   by="Tag_ID") %>% 
+#   arrange(Species,Life_Stage, desc(n_sites), desc(YearsFirstLast)) %>% 
+#   group_by(Species,Life_Stage) %>% 
+#   mutate(id=row_number()) %>%
+#   filter(id<11) %>%  # top 10 per species/lifestage
+#   View() 
+
+# Can also look at tags with the most detections by species/lifestage
+most_dets_by_sp <- ind_d  %>% 
   group_by(Tag_ID,Life_Stage,Species) %>% 
   count() %>% 
-  group_by(Species) %>% 
-  filter(n==max(n)) %>% 
-  pull(Tag_ID) %>% 
-  c("1018",billy)
+  group_by(Species,Life_Stage) %>% 
+  filter(n==max(n))
+
+
+
+# Interesting Individuals
+grayling <- c("511", "434")
+
+billy <- "898"
+bull_trout <- c(billy,"540","544")
+
+burbot <- c("822","745")
+rainbow <- c("607","563")
+whitefish <- c("1018", "943")
+walleye <- c("521", "480")
+
+selected_individuals <- c(grayling, bull_trout, burbot, rainbow, whitefish, walleye)
 
 ind_d <- ind_d %>% 
-  filter(Tag_ID %in% c(billy,most_tags_by_sp)) %>% 
+  filter(Tag_ID %in% selected_individuals) %>% 
   mutate(tagcode=case_when(Ch=="3" ~ paste0("149.360 ", Code),
                           #Ch=="4" ~ paste0("149.440 ", Code),
                            Ch=="5" ~ paste0("149.400 ", Code)),
