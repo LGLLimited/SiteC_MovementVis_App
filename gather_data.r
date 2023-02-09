@@ -3,13 +3,15 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <- readRDS("data/data_operational_20220923.rds") %>% 
+d_opr <- readRDS("data/data_operational_20230208.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
 
+#all(colnames(readRDS('data/data_operational_20230208.rds') %>% as_tibble()) %in% colnames(d_opr))
+
 min_date <- ymd("2019-04-01")
-max_date <- ymd("2022-08-31")
+max_date <- ymd("2022-12-31")
 
 d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
@@ -33,7 +35,7 @@ det_sites <- d %>%
 peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>% 
   st_transform(4326) %>% 
   st_zm() %>% 
-  filter(StreamName %in% c("Unnamed Creek","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
+  filter(StreamName %in% c("Unnamed Creek","Needham Creek","Chowade River","Cypress Creek","Farrell Creek","Sukunka River","Burnt River","Graham River","Turnoff Creek","Fiddes Creek","Beatton River","Wolverine River","Kiskatinaw River","Murray River","Roberston Creek","Peace River","Pine River","Halfway River","Moberly River","Maurice Creek","Cameron River")) %>% 
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
 receivers <- st_read(dsn='./data',layer="fixed_stations",quiet=TRUE) %>% mutate(lon=st_coordinates(.)[,1],

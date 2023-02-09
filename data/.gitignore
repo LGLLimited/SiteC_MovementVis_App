@@ -6,3 +6,5 @@ fixed_stations.prj
 fixed_stations.qmd
 fixed_stations.shp
 fixed_stations.shx
+data_operational_20230208.rds
+app_data_new.rda
