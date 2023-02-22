@@ -8,3 +8,5 @@ fixed_stations.shp
 fixed_stations.shx
 data_operational_20230208.rds
 app_data_new.rda
+moblie_zone_centroids_2023.csv
+data_operational_20230221.rds

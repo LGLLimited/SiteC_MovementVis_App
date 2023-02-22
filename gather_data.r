@@ -3,7 +3,8 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <- readRDS("data/data_operational_20230208.rds") %>% 
+d_opr <- #readRDS("data/data_operational_20230208.rds") %>% 
+  readRDS("data/data_operational_20230221.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
@@ -46,8 +47,12 @@ location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
 
-zone_coord_lut <- read_csv("data/mobile_zone_midpoints_new.csv",show_col_types = FALSE) %>% 
-  rename(ZoneLat=Latitude, 
+# zone_coord_lut <- read_csv("data/mobile_zone_midpoints_new.csv",show_col_types = FALSE) %>% 
+#   rename(ZoneLat=Latitude, 
+#          ZoneLong=Longitude)
+
+zone_coord_lut <- read_csv("data/moblie_zone_centroids_2023.csv",show_col_types = FALSE) %>%
+  rename(ZoneLat=Latitude,
          ZoneLong=Longitude)
 
 # Individual data ####
@@ -125,7 +130,7 @@ ind_d <- ind_d %>%
 
 # Seasonal data ####  
 d2 <- d %>% #distinct(Zone_No)
-  left_join(zone_coord_lut,by="Zone_No") %>% 
+  left_join(zone_coord_lut,by="Zone_No") %>%
   # snap mobile dets to zone river segment centriods in zone_coord_lut
   mutate(Latitude=if_else(Type=="Mobile",ZoneLat, Latitude),
          Longitude=if_else(Type=="Mobile",ZoneLong, Longitude),
