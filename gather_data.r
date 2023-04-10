@@ -4,7 +4,7 @@ library(sf)
 
 # Operational data ####
 d_opr <- #readRDS("data/data_operational_20230208.rds") %>% 
-  readRDS("data/data_operational_20230221.rds") %>% 
+  readRDS("data/data_operational_20230410.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
