@@ -30,6 +30,7 @@ max_data_date <- format(max_date,"%B %d, %Y")
 det_sites <- d %>% 
   filter(Type %in% c("Station","Release","Haul")) %>% 
   distinct(Detect_Site,Type, Latitude, Longitude) %>%
+  # Converts to a spatial dataframe
   st_as_sf(coords=c("Longitude","Latitude"),crs=4326) %>% 
   filter(!str_detect(Detect_Site,"HIST"))
 
@@ -40,9 +41,12 @@ peace_network <- st_read(dsn = './data',layer="peace_line",quiet=TRUE) %>%
   mutate(lwd=if_else(StreamName=="Peace River","Peace","Trib"))
 
 
-receivers <- st_read(dsn='./data',layer="fixed_stations",quiet=TRUE) %>% mutate(lon=st_coordinates(.)[,1],
-                                                                                lat=st_coordinates(.)[,2]) %>% st_set_geometry(NULL)
+receivers <- st_read(dsn='./data',layer="fixed_stations",quiet=TRUE) %>% 
+  mutate(lon=st_coordinates(.)[,1],
+         lat=st_coordinates(.)[,2]) %>% 
+  st_set_geometry(NULL)
 
+# Reference points, like Site C dam
 location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>% 
   st_zm() %>% 
   filter(StreamName =="Site C Project")#%in% c("Site C Project","Peace Canyon Dam","Many Islands"))
@@ -51,6 +55,8 @@ location_pts <- st_read(dsn='./data',layer="shp_locations-point", quiet=TRUE) %>
 #   rename(ZoneLat=Latitude, 
 #          ZoneLong=Longitude)
 
+# This csv is generated in GIS
+# some zones need centroids eyeballed manually when zone has multiple river segments within.
 zone_coord_lut <- read_csv("data/moblie_zone_centroids_2023.csv",show_col_types = FALSE) %>%
   rename(ZoneLat=Latitude,
          ZoneLong=Longitude)
