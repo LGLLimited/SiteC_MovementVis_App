@@ -3,32 +3,47 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <- #readRDS("data/data_operational_20230208.rds") %>% 
-  readRDS("data/data_operational_20230410.rds") %>% 
+d_opr <-  readRDS("data/data_operational_21March2024.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
 
+# Fixing Species ===========================
+
+d_opr  <- d_opr %>%
+ mutate(Species = 
+    case_when(
+        Species=="BT" ~ "Bull Trout",
+        Species=="RB" ~ "Rainbow Trout",
+        Species=="AG" ~ "Arctic Grayling",
+        Species=="WP" ~ "Walleye",
+        Species=="BB" ~ "Burbot",
+        Species=="MW" ~ "Mountain Whitefish",
+        TRUE ~ Species
+    ))
+
+
 #all(colnames(readRDS('data/data_operational_20230208.rds') %>% as_tibble()) %in% colnames(d_opr))
 
 min_date <- ymd("2019-04-01")
-max_date <- ymd("2022-12-31")
+max_date <- ymd("2023-12-31")
 
 #d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
 d <- d_opr %>% 
-  filter(Type %in% c("Release", "Station", "Mobile","Haul"),
+  filter(Type %in% c("Release", "Station", "Mobile","Haul", "PIT"),
          ! Species %in% c("TBD","Unknown","Place Holder", "Mainstreams 2008 fish")) %>% 
   filter((!is.na(Latitude) & !is.na(Longitude))) %>% 
-  mutate(Life_Stage=if_else(Life_Stage=="adult"|Life_Stage==0,"Adult",Life_Stage)) %>%
+  filter(Dataset=="Present")  %>% 
+ mutate(Life_Stage=if_else(Life_Stage=="adult"|Life_Stage==0,"Adult",Life_Stage)) %>%
   filter(between(date(First_Datetime), min_date, max_date))
 
 # Date for ui text
 max_data_date <- format(max_date,"%B %d, %Y")
-      
+
 # Map data ####
 det_sites <- d %>% 
-  filter(Type %in% c("Station","Release","Haul")) %>% 
+  filter(Type %in% c("Station","Release","Haul", "PIT")) %>% 
   distinct(Detect_Site,Type, Latitude, Longitude) %>%
   # Converts to a spatial dataframe
   st_as_sf(coords=c("Longitude","Latitude"),crs=4326) %>% 
@@ -186,3 +201,4 @@ n_seas <- lst(Monthly=n_month, Weekly=n_week)
 
 
 save(list = c("location_pts","peace_network","receivers","max_data_date","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
+

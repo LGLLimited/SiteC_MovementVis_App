@@ -1,5 +1,7 @@
 # UI ####
-ui <- fluidPage(titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width="100px",style="float: right;"),
+ui <- fluidPage(
+  #theme = bslib::bs_theme(bootswatch = "lumen"), #If we ever want to add a theme from https://bootswatch.com
+  titlePanel(title=img(src="BC-Hydro-Logo.png",height="56px",width="100px",style="float: right;"),
                            windowTitle="Site C Fish Movement Assessment"),
                 tabsetPanel(id="main",
                             tabPanel("Info",

@@ -3,7 +3,7 @@ server <- function(input, output, session) {
   
   output$data_desc <- renderText(paste0("Data current as of ",max_data_date,"."))
   
-# Basemap parameters ####
+# Basemap parameters ########################################################################################################
   
   basemap <- reactive({if_else(input$basemap=="Satellite", "Esri.WorldImagery", "Esri.WorldStreetMap")})
   # selected tab
@@ -27,13 +27,13 @@ server <- function(input, output, session) {
     else{updateSliderTextInput(session,inputId = "month",selected = input$month)}
     })
   # 
-# Individual Map Params ####
+# Individual Map Params ###############################################################################################################
   
   output$map1 <- renderLeaflet({make_map(basemap, peace_network, location_pts) %>% 
       addLegendAwesomeIcon(iconSet, orientation = 'horizontal', position="topright") 
     })
 
-  # Basemap observer ####  
+  # Basemap observer ===============================================================================================================  
   observe({ 
     leafletProxy(map())  %>% 
       addProviderTiles(basemap(),layerId = "base") %>% 
@@ -61,7 +61,7 @@ server <- function(input, output, session) {
       
   })
   
-  # Receiver observer ####
+  # Receiver observer  ===============================================================================================================
   observe({
     color <- if_else(input$basemap=="Terrain","#545353","white")
     
@@ -107,7 +107,7 @@ server <- function(input, output, session) {
       The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility."
     }else{
       text <- "This plot animates counts of tagged individuals at each detection location through time at the selected time step. 
-      The size of the circle is proportional to the number of unique individuals detected at a location. If <b>Show detections by type</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, and mobile detections."
+      The size of the circle is proportional to the number of unique individuals detected at a location. If <b>Show detections by type</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, mobile detections, and recapture PIT tag detections."
     }
       text
   
@@ -142,19 +142,19 @@ server <- function(input, output, session) {
        
     })
   
-# Seasonal Map Params ####
+# Seasonal Map Params #######################################################################################################################################
   
   output$map2 <- renderLeaflet({
    make_map(basemap, peace_network,  location_pts) 
 })
   
-  # Det_type observer ####
+  # Det_type observer  ================================================================================================================================
   observe({
     req(!is.null(input$det_type))
    if(input$det_type & map()=="map2"){
      leafletProxy(map()) %>%
       addLegend(title = "Detection Type",layerId = "det_type",
-                labels=factor(c("Release", "Station", "Mobile"), levels=c("Release", "Station", "Mobile")),
+                labels=factor(c("Release", "Station", "Mobile", "PIT"), levels=c("Release", "Station", "Mobile", "PIT")),
                 colors=paste0(colors(),"; border-radius: 50%; width:",15,"px; height:",15,"px;"),opacity = 1)}else{
                   leafletProxy(map()) %>% removeControl("det_type")}
     
@@ -205,9 +205,9 @@ colors <- reactive({
     # if(input$basemap=="Terrain"){
     #   c("#1aeb02","#ff9305","#ff66fc")#"#ff9305")
     # }else{
-      c("#1aeb02","#ff9305","#ff66fc")#"#ff9305")
+      c("#1aeb02","#ff9305","#ff66fc", "#e70505")
       # c("#1aeb02","#ff66fc","#f0ea4d")
-  } else if (input$basemap=="Terrain"){c("blue","blue","blue")}else{c("yellow","yellow","yellow")}
+  } else if (input$basemap=="Terrain"){c("blue","blue","blue", "blue")}else{c("yellow","yellow","yellow" ,"yellow")}
 })
 
   observeEvent({filterTime()
@@ -217,7 +217,7 @@ colors <- reactive({
                 }, {
                   
 pal <- colorFactor(colors(),
-                   levels=factor(c("Release","Station","Mobile"),levels = c("Release","Station","Mobile")),
+                   levels=factor(c("Release","Station","Mobile", "PIT"),levels = c("Release","Station","Mobile", "PIT")),
                    ordered = TRUE)
                          
       leafletProxy("map2") %>%
@@ -250,7 +250,7 @@ pal <- colorFactor(colors(),
               addControl(layerId="seas_title",html = seas_title(), className = 'map-title')
     })
   
-# Map title HTML style ####  
+# Map title HTML style #########################################################################################################################################
 map_title_tag <-  tags$style(HTML("
   .leaflet-control.map-title {
     transform: translate(-50%,20%);
@@ -266,7 +266,7 @@ map_title_tag <-  tags$style(HTML("
   }
 "))
   
-# UI outputs ####  
+# UI outputs ######################################################################################################################################################
   
   output$choiceUI <- renderUI({
     if(input$tabs=="Individual Movements"){

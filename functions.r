@@ -64,7 +64,7 @@ HTML('
   <h2> About this Shiny App </h2>
   Two visualizations of the detection data are provided on the Plots tab. The <b>Individual Movements</b> tab plots detection locations for select individual fish through time. The <b>Seasonal Distribution</b> tab
   shows counts of unique individuals at detection locations during either weekly or monthly time intervals with circles sized proportionally to the number of individuals detected. 
-  Detection locations are colored to distinguish release locations, detections at fixed stations, and mobile survey detections.
+  Detection locations are colored to distinguish release locations,  detections at fixed stations, mobile survey detections, and PIT tag detections.
   </p>
   <p>
   <h2> Acknowledgement </h2>
@@ -77,6 +77,8 @@ HTML('
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2020-Annual-Report.pdf" target="_blank">2020</a>
   <br>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank">2021</a>
+  <br>
+  <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2022-Annual-Report.pdf" target="_blank">2022</a>
   </p>
  ')
 }

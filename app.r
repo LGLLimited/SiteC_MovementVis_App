@@ -19,6 +19,5 @@ source("server_code.r")
 
 # Run the application 
 
+#runApp() - Use this if images won't load. 
 shinyApp(ui = ui, server = server)
-
-
