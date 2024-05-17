@@ -122,20 +122,77 @@ most_dets_by_sp <- ind_d  %>%
   group_by(Species,Life_Stage) %>% 
   filter(n==max(n))
 
+#Fish with the most movement and years detected
+most_dist_year <- d %>% 
+  group_by(Tag_ID, Life_Stage, Species) %>% 
+  summarise(
+    DiffYears = n_distinct(Detect_Year), 
+    min = min(Detect_River_RKM), 
+    max=max(Detect_River_RKM),
+    .groups = "keep"
+  ) %>% 
+  mutate(distance = max-min) %>% 
+  group_by(Life_Stage, Species) %>% 
+  arrange(desc(DiffYears), desc(distance)) %>% 
+  slice_head(n=5) 
+
+#Fish with the most movement and years detected
+most_dist <- d %>% 
+  group_by(Tag_ID, Life_Stage, Species) %>% 
+  summarise(
+    min = min(Detect_River_RKM), 
+    max=max(Detect_River_RKM),
+    .groups = "keep"
+  ) %>% 
+  mutate(distance = max-min) %>% 
+  group_by(Life_Stage, Species) %>% 
+  arrange(desc(distance)) %>% 
+  slice_head(n=5) 
+
+# Fish with the most number of unique detection zones
+most_zones <- d %>% 
+  group_by(Tag_ID, Life_Stage, Species) %>% 
+  summarise(DiffZones = n_distinct(Zone_No),
+            .groups = "keep") %>% 
+  group_by(Life_Stage, Species) %>% 
+  slice_max(DiffZones, n=5) 
 
 
-# Interesting Individuals
-grayling <- c("511", "434")
+filter(most_zones, Tag_ID %in% most_dist$Tag_ID) %>% print(n=Inf)
 
+# Interesting Individuals #########################################################
+
+## Original picks ==============================================================
+grayling <- c("511", "434") #Codes: 341, 314 (both fine, both go down moberly, 341 better)
 billy <- "898"
-bull_trout <- c(billy,"540","544")
+bull_trout <- c(billy,"540","544")  #Codes: 496, 208 (really good), 337 (great)
 
-burbot <- c("822","745")
-rainbow <- c("607","563")
-whitefish <- c("1018", "943")
-walleye <- c("521", "480")
+burbot <- c("822","745")  #Codes: 626 (fine), 627 (not good)
+rainbow <- c("607","563")  #Codes: 275 (okay), 342 (pretty good)
+whitefish <- c("1018", "943")  #Codes: 120 (okay, hauled), 674 (good)
+walleye <- c("521", "480")  #Codes: 160 (real good), 162 (great)
 
-selected_individuals <- c(grayling, bull_trout, burbot, rainbow, whitefish, walleye)
+## New interesting fish ========================================================
+new_bulltrout_dist <- c("809", "637")  #Codes:647 (all the way up halfway twice), 148 (goes up halfway)
+new_bulltrout_zone <- c("1107", "612") #Codes: 209 (fantastic example), 269 (fine)
+new_bulltrout_dist_year  <- c("829") #Codes: 661 (just back and forth over many years, trouble with dam?)
+newgralying <- c("964", "571") #Codes: 695 (pretty good), 249 (better)
+newburbot  <- c("485", "632") #Codes: 247 (not good), 236 (bad)
+newrainbow <- c("573", "655") #Codes: 238 (good but not special), 215 (good)
+newwhite <- c("1015") #Codes: 117 (not interesting)
+newwalleye <- c("480", "877", "472", "519") #Codes: 162 (great), 501 (great), 116 (fine), 158 (nope)
+
+## Final picks =================================================================
+bulltroutFin <- c(billy, "540", "544", "1107", "829") #I'd consider 647 as well
+          #^Codes: 496, 208, 337, 209, 661
+graylingFin  <- c("511", "571") #Codes: 341, 249
+burbotFin <- c("822","745")  #Codes: 626, 627
+rainbowFin <- c("607","563", "655") #Codes 275, 342, 215
+whiteFin <- c("1018", "943")  #Codes: 120, 674 
+walleyeFin  <- c("521", "480", "877") #Codes: 160, 162, 501
+
+selected_individuals <- 
+  c(bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
 
 ind_d <- ind_d %>% 
   filter(Tag_ID %in% selected_individuals) %>% 
@@ -157,7 +214,7 @@ d2 <- d %>% #distinct(Zone_No)
          Longitude=if_else(Type=="Mobile",ZoneLong, Longitude),
          month=month(Last_Datetime,label = TRUE,abbr = FALSE),
          week=week(Last_Datetime)) %>%
-    filter(Detect_Year %in% c("2019","2020","2021","2022"), month %in% month.name[4:10]) %>% 
+    filter(Detect_Year %in% c("2019","2020","2021","2022", "2023", "2024"), month %in% month.name[4:10]) %>% 
   distinct(Tag_ID, Type, Species, Life_Stage, Detect_Site, month, Last_Datetime, Detect_Year, Latitude, Longitude) %>%
   mutate(weekstart=floor_date(Last_Datetime,"week"),
          monthstart=floor_date(Last_Datetime,"month")) %>%
