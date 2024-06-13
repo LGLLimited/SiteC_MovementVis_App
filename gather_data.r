@@ -3,7 +3,7 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <-  readRDS("data/data_operational_21March2024.rds") %>% 
+d_opr <-  readRDS("data/OperationalData_Cleaned_13June2024.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
