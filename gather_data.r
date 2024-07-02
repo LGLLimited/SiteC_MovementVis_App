@@ -256,6 +256,40 @@ d_week <- d2 %>%
 d_seas <- lst(Monthly=d_month, Weekly=d_week)
 n_seas <- lst(Monthly=n_month, Weekly=n_week)
 
+# Filtering out detections outside of peace_network ############################
+newbox <- st_as_sfc(st_bbox(peace_network)) #Creates box containing all of peace network
 
+ind_d_sf <- 
+  st_as_sf(ind_d, coords=c("Longitude", "Latitude"), crs=st_crs(peace_network))
+
+d_seas_sf <- 
+  map(d_seas, ~.x %>% 
+       st_as_sf(coords=c("Longitude", "Latitude"), crs=st_crs(peace_network)))
+
+ind_d_filtered <- st_filter(ind_d_sf, newbox) %>% 
+  as_tibble() %>% 
+  mutate(
+    Latitude = (st_coordinates(geometry)[, 2]), 
+    Longitude=  (st_coordinates(geometry)[, 1])
+  ) %>% select(colnames(ind_d), -geometry)
+
+d_seas_filtered <- map(d_seas_sf, 
+  ~st_filter(.x, newbox) %>% 
+  as_tibble() %>% 
+  mutate(
+    Latitude = (st_coordinates(geometry)[, 2]), 
+    Longitude=  (st_coordinates(geometry)[, 1])
+  ) %>% select(colnames(d_seas[[1]]), -geometry)
+)
+
+## Comparing filtered to non-filtered =========================================
+anti_join(ind_d, ind_d_filtered)
+map2(d_seas, d_seas_filtered, ~anti_join(.x, .y))
+
+## Setting the values as the old names =========================================
+ind_d <- ind_d_filtered
+d_seas <- d_seas_filtered
+
+# Saving final app_data.rda ####################################################
 save(list = c("location_pts","peace_network","receivers","max_data_date","ind_d","d_seas","n_seas"),file = "data/app_data.rda")
 
