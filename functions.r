@@ -79,6 +79,8 @@ HTML('
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank">2021</a>
   <br>
   <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2022-Annual-Report.pdf" target="_blank">2022</a>
+  <br>
+  <a href="https://www.sitecproject.com/sites/default/files/Mon-1b-Task-2d-SiteC-Fish-Movement-Assessment-2023-Annual-Report.pdf" target="_blank">2023</a>
   </p>
  ')
 }
