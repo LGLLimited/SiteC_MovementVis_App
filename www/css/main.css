@@ -56,7 +56,7 @@
 
 
 /* ===================================================================
- * # base style overrides
+ * # base style overrides (base font, base background color, etc.)
  *
  * ------------------------------------------------------------------- */
 html {
@@ -74,7 +74,7 @@ html, body {
 }
 
 body {
-    background: #111111;
+    background: #10a4ca; 
     font-family: "lora-regular", serif;
     font-size: 1.7rem;
     font-style: normal;
@@ -1295,6 +1295,32 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     margin-left: auto; /* Center horizontally */
     margin-right: auto; /* Center horizontally */
 }
+
+
+#stationMap {
+        background-color: #4cb849; /* Background color */
+    padding-top: 50px; /* Adjust the value as needed for blank space */
+}
+
+#stationMap h1 {
+    font-size: 7rem; /* Default font size */
+    line-height: 1.25;
+    letter-spacing: -.1rem;
+    color: #FFFFFF; /* Set the text color */
+    font-family: "montserrat-medium"; /* Specific font for h1 */
+}
+
+#stationMap h2 {
+    font-family: "montserrat-bold"; /* Specific font for h2 */
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    line-height: 1.333;
+    color: #f5edd3; /* Set the text color */
+    letter-spacing: 0.25rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 
 /* Divide the container into two sections */
 .about__container {
