@@ -14,13 +14,10 @@ load("data/app_data.rda", envir = .GlobalEnv) # load the environment with object
 
 # Source the app
 source("functions.r")
-source("map_tab.r")
-source("ui.r")
-source("server.r")
-
+source("ui_code.r")
+source("server_code.r")
 
 # Run the application 
-shiny::devmode()
-options(shiny.autoreload = TRUE)
-runApp() #- Use this if images won't load. 
-#shinyApp(ui = ui, server = server)
+
+#runApp() - Use this if images won't load. 
+shinyApp(ui = ui, server = server)
