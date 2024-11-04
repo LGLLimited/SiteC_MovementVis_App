@@ -1300,6 +1300,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 #stationMap {
         background-color: #4cb849; /* Background color */
     padding-top: 50px; /* Adjust the value as needed for blank space */
+    margin-bottom: 2rem;
 }
 
 #stationMap h1 {
@@ -1365,6 +1366,13 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     font-size: 1.75rem;
     padding: 2rem;
     color: #000000; /* Matches .subhead--dark color */
+}
+
+.leaflet-container {
+    width: 100% !important; /* Make leaflet map responsive */
+    height: 100% !important; /* Set a fixed height */
+    min-height: 700px; /* Optional: set a minimum height for smaller screens */
+    min-width: 1000px; /* Optional: set a minimum height for smaller screens */
 }
 
 .link {
