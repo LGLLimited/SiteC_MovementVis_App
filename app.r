@@ -14,7 +14,8 @@ load("data/app_data.rda", envir = .GlobalEnv) # load the environment with object
 
 # Source the app
 source("functions.r")
-source("map_tab.r")
+source("stationMap_ui.r")
+source("movementMap_ui.r")
 source("ui.r")
 source("server.r")
 

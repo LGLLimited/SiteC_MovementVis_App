@@ -42,6 +42,8 @@
     <!-- shiny stuff
         ================================================== -->
     <style>.selectize-dropdown {z-index: 10000}</style>
+    {{headContent()}}
+    {{bootstrapLib()}}
 </head>
 
 <body id="top">
@@ -214,46 +216,13 @@
 <!-- end s-about -->
 
 <div id = 'stationMap'>
-    {{map_tab_ui}}
+    {{stationMap}}
 </div>
 
-    <!-- map ================================================== -->
-    <section id='services' class="s-clients">
-      
-        <div class="row section-header has-bottom-sep aos-init aos-animate" data-aos="fade-up">
-            <div class="col-full">
-                <h2 class="subhead">Let's map some of my Uber Trips</h2>
+<div>
+    {{movementMap}}
+</div>
 
-            </div>
-        </div>
-
-      <div class="intro-wrap"> 
-       leaflet_map 
-      </div>
-      
-      <div class="row services-list block-1-2 block-tab-full">
-        <div class="col-block service-item aos-init aos-animate" data-aos="fade-up">
-             city_selector 
-        </div>
-        <div class="col-block service-item aos-init aos-animate" data-aos="fade-up">
-             time_selector 
-        </div>
-      </div>
-
-    </section> 
-    <!-- end s-map -->
-    
-    <section id="vivek" class="s-services">
-      <div class="row section-header aos-init aos-animate" data-aos="fade-up">
-            <div class="col-full">
-                <h3 class="subhead">Our Clients</h3>
-                <h1 class="display-2">Glint has been honored to
-                partner up with these clients</h1>
-            </div>
-        </div>
-    </section>
-
-  
 
 
 

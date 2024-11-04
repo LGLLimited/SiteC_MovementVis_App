@@ -1,2 +1,4 @@
-ui <- shiny::htmlTemplate("www/index.html",
-map_tab = map_tab_ui)
+ui <- shiny::htmlTemplate(
+  "www/index.html",
+  stationMap = stationMap_ui,
+  movementMap = movementMap_ui)

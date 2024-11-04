@@ -1,6 +1,6 @@
 library(shiny)
 
-map_tab_ui <- tabPanel(
+stationMap_ui <- tabPanel(
   "Map",
   titlePanel(h1("Fixed Receiver Locations", align = 'center')),
   div(h2("The fixed array in the Peace River Basin has been operated from April through October each year since 2019.", style = 'text-align: center;')),  # Changed to h2
