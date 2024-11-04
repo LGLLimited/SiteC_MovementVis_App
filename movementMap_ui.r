@@ -9,43 +9,7 @@ movementMap_ui <-
   sidebarLayout(
      sidebarPanel(width=3,
        fluidRow(
-    #       tags$head(tags$style(HTML("
-    #        hr {border-top: 0.5px solid #000000;}
-    #        .shiny-input-container {
-    #          font-size: 14px;
-    #          width: 100%; /* Ensure it uses the full width */
-    #        }
-    #      .selectize-input {
-    #      height: 20px; /* Set a fixed height */
-    #      line-height: 20px;
-    #      padding: 0 4px; /* Add some horizontal padding */
-    #    }
-    #        .selectize-input input {
-    #     height: 20px; /* Ensure the input area matches */
-    #     padding: 0; /* Remove padding from input */
-    #     margin: 0; /* Remove margin */
-    #     line-height: 20px; /* Align input text */
-    # }
-    
-    #       "))),
-
-#          tags$head(tags$style(HTML("
-#     .shiny-input-select {
-#         font-size: 14px; /* Ensure consistent font size */
-#         width: 100%; /* Ensure it uses the full width */
-#     }
-#     .selectize-input {
-#         height: 10 !important; /* Allow height to adjust automatically */
-#         padding: 4px; /* Adjust padding to fit content */
-#         line-height: 1.5; /* Ensure line height for readability */
-#         border: 0px solid #ccc; /* Add a border for visibility */
-#         box-shadow: none; /* Remove any box shadow */
-#     }
-#     .selectize-input [class*='item'] {
-#         line-height: 1.5; /* Ensure dropdown items have appropriate line height */
-#     }
-
-# "))),
+         tags$head(tags$style(HTML(" hr {border-top: 0.5px solid #000000;}"))),
          # play button size
          tags$head(tags$style(type='text/css', ".slider-animate-button { font-size: 12pt !important;}")),
          # shift play button to left and pad away from slider
@@ -70,11 +34,11 @@ movementMap_ui <-
        fluidRow(HTML("<b>Plot description.</b>"), tags$div(style = "font-size: 12px;",htmlOutput("plot_desc")),
        br(),tags$div(style = "font-size: 12px;",textOutput("data_desc")))
      ),
-     mainPanel(width=9,
+     mainPanel(width=9, #Size of map controled by main.css .leafleft-container
        tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
        tabsetPanel(id="tabs",
-         tabPanel("Individual Movements", mainPanel(leafletOutput("map1"))),#,width="150vh",height="87vh"))),
-         tabPanel("Seasonal Distribution", mainPanel(leafletOutput("map2")))#,width="150vh",height="87vh")))
+         tabPanel("Individual Movements", mainPanel(tags$div(class="custom-tab-pane", leafletOutput("map1")))),#,width="150vh",height="87vh"))),
+         tabPanel("Seasonal Distribution", mainPanel(tags$div(class="custom-tab-pane", leafletOutput("map2"))))#,width="150vh",height="87vh")))
        )
      )
    )

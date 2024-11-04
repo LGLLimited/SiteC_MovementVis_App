@@ -1369,11 +1369,43 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .leaflet-container {
-    width: 100% !important; /* Make leaflet map responsive */
-    height: 100% !important; /* Set a fixed height */
-    min-height: 700px; /* Optional: set a minimum height for smaller screens */
-    min-width: 1000px; /* Optional: set a minimum height for smaller screens */
+    width: 100vw; /* Full viewport width */
+    height: 80vh; /* 80% of viewport height */
+    min-width: 1200px;
+    min-height: 800px;
 }
+
+
+.tab-pane {
+    width: 100%; /* Ensure full width within its container */
+    flex-grow: 1; /* If within a flex container, this makes it grow to take available space */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    box-sizing: border-box; /* Ensure padding/border don’t affect width */
+    align-items: center;
+}
+
+.tab__container {
+    display: flex; /* Ensure it’s using flexbox */
+    flex-direction: row; /* Make children align in a row */
+    align-items: stretch; /* Ensure children stretch to full container height */
+}
+
+.tab-pane .row {
+    max-width: 100%; /* Remove the 1200px constraint */
+    width: 100%; /* Ensure it occupies the full available width */
+    margin: 0; /* Remove any default horizontal margin */
+}
+
+.tab-pane .container, .tab-pane .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nav-tabs {
+    width: 70%;
+}
+
 
 .link {
     color: #fcfcfc; /* Change to your desired color */
