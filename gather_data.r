@@ -25,7 +25,7 @@ d_opr  <- d_opr %>%
 
 #all(colnames(readRDS('data/data_operational_20230208.rds') %>% as_tibble()) %in% colnames(d_opr))
 
-min_date <- ymd("2019-04-01")
+min_date <- ymd("2017-08-01")#ymd("2019-04-01") Changed for billy PIT video Nov. 4 2024
 max_date <- ymd("2023-12-31")
 
 #d_opr 
@@ -78,12 +78,12 @@ zone_coord_lut <- read_csv("data/moblie_zone_centroids_2023.csv",show_col_types 
 
 # Individual data ####
 ind_d <- d  %>% #filter(Species=="Rainbow Trout") %>% #filter(Tag_ID==898) 
-  select(Tag_ID,Ch,Code,Life_Stage,Species,Detect_Site,First_Datetime,Last_Datetime,Latitude,Longitude) %>% 
+  select(Tag_ID,Ch,Code,Life_Stage,Species,Detect_Site,First_Datetime,Last_Datetime,Latitude,Longitude, Type) %>% 
   arrange(First_Datetime) %>% 
   pivot_longer(cols = c(First_Datetime,Last_Datetime), names_to = "FirstLast", values_to = "Datetime") %>% 
   mutate(Present=TRUE, 
          yr=year(Datetime)) %>% 
-  distinct(Tag_ID, Ch,Code,Species, Life_Stage, Detect_Site, Latitude,Longitude,Datetime,Present,yr) %>% 
+  distinct(Tag_ID, Ch,Code,Species, Life_Stage, Detect_Site, Latitude,Longitude,Datetime,Present,yr, Type) %>% 
   arrange(Tag_ID, Datetime) %>% 
   nest(data=-Tag_ID) %>% 
   mutate(data=map(data, 
@@ -93,7 +93,13 @@ ind_d <- d  %>% #filter(Species=="Rainbow Trout") %>% #filter(Tag_ID==898)
   unnest(data) %>% 
   filter(Latitude!=0&Longitude!=0) %>% 
   #Force MST to UTC
-  mutate(Datetime=floor_date(force_tz(Datetime,"UTC"),unit = 'second')) # convert data from MST with milliseconds to UTC with seconds
+  mutate(Datetime=floor_date(force_tz(Datetime,"UTC"),unit = 'second'))  %>% # convert data from MST with milliseconds to UTC with seconds
+  #Changing "Movement" to "PIT" if PIT, all else Radio.
+  mutate(haul = case_when(
+    haul == "Movement" & Type == "PIT" ~ "PIT",
+    haul == "Movement" & Type != "PIT" ~ "Radio",
+    TRUE ~ haul
+    ))
 
 
 # Look at number of sites a fish was detected at and the duration in years from  

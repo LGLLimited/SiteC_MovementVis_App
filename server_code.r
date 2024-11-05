@@ -97,7 +97,8 @@ server <- function(input, output, session) {
   
   iconSet <- awesomeIconList(
     `Hauled`=makeAwesomeIcon(icon="fish", library = "fa", text=fontawesome::fa('fish'), markerColor = "red", iconColor = "black"),
-    `Movement`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "lightgray", iconColor = "black")
+    `PIT`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "green", iconColor = "black"),
+    `Radio`=makeAwesomeIcon(icon="fish", library="fa",text=fontawesome::fa('fish'),markerColor = "purple", iconColor = "black")
   )
 
   output$plot_desc <- renderText({
