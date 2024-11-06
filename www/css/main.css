@@ -1331,6 +1331,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     align-items: stretch; /* Ensure children stretch to the full height */
 }
 
+
+
 /* Left section styling */
 .about__left {
     width: 25%;
@@ -1366,6 +1368,47 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     font-size: 1.75rem;
     padding: 2rem;
     color: #000000; /* Matches .subhead--dark color */
+}
+
+/* Hyperlink buttons */
+
+.annual-reports {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.annual-reports__title {
+    margin-bottom: 20px;
+    font-size: 4rem; /* Reduced size to prevent overflow */
+    font-family: "montserrat-medium", sans-serif;
+    color: #FFFFFF; /* Matches .display-1--light color */
+    text-align: center;
+    margin: 0; /* Remove margin to prevent overlapping */
+}
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.button-link {
+    padding: 10px 20px;
+    background-color: #4cb849;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+    background-color: #103a0f;
+    color: #ffffff;
 }
 
 .leaflet-container {
