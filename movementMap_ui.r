@@ -7,7 +7,7 @@ movementMap_ui <-
  lapply(list.files("www/css", pattern = "\\.css$", full.names = TRUE), includeCSS),
  #lapply(list.files("www/js", pattern = "\\.js$", full.names = TRUE), includeScript),
   sidebarLayout(
-     sidebarPanel(width=3,
+     sidebarPanel(width=3, class="moveMapSideBar",
        fluidRow(
          tags$head(tags$style(HTML(" hr {border-top: 0.5px solid #000000;}"))),
          # play button size
@@ -37,8 +37,8 @@ movementMap_ui <-
      mainPanel(width=9, #Size of map controled by main.css .leafleft-container
        tags$head(tags$style(HTML('.irs-from, .irs-to, .irs-min, .irs-max{visibility: hidden !important;}'))),
        tabsetPanel(id="tabs",
-         tabPanel("Individual Movements", mainPanel(tags$div(class="custom-tab-pane", leafletOutput("map1")))),#,width="150vh",height="87vh"))),
-         tabPanel("Seasonal Distribution", mainPanel(tags$div(class="custom-tab-pane", leafletOutput("map2"))))#,width="150vh",height="87vh")))
+            tabPanel("Individual Movements", mainPanel(leafletOutput("map1",width="71vw",height="87vh"))),
+            tabPanel("Seasonal Distribution", mainPanel(leafletOutput("map2",width="71vw",height="87vh")))
        )
      )
    )

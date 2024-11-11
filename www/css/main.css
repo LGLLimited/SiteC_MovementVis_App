@@ -1412,10 +1412,16 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 }
 
 .leaflet-container {
-    width: 100vw; /* Full viewport width */
-    height: 80vh; /* 80% of viewport height */
+    width: 100%; /* Full viewport width */
+    height: 80%; /* 80% of viewport height */
+    flex-grow: 1;
     min-width: 1200px;
     min-height: 800px;
+}
+
+.nav.nav-tabs {
+    padding: 0;         /* Remove padding */
+    border: none;       /* Remove border if needed */
 }
 
 
@@ -1444,6 +1450,11 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     padding-left: 0;
     padding-right: 0;
 }
+
+.moveMapSideBar{
+    max-height: 900px; /* Set the desired height for the sidebar */
+    overflow-y: auto; /* Scroll if content exceeds set height */
+  }
 
 .nav-tabs {
     width: 70%;
