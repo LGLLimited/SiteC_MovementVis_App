@@ -1496,6 +1496,61 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     text-decoration: underline; /* Optional: underline on hover */
 }
 
+/* Slider container */
+.slider {
+    width: 80%; /* Set the width of the slider container */
+    max-width: 100%; /* Ensure the container does not exceed the screen width */
+    position: relative;
+    overflow: hidden; /* Ensures only one image is shown at a time */
+    display: flex;
+    justify-content: center; /* Centers the slider content horizontally */
+    align-items: center; /* Centers the slider content vertically */
+    margin: 0 auto; /* Centers the slider on the page */
+    height: 800px; /* Fixed height of the slider container */
+  }
+  
+  /* Images in the slider */
+  .slider img {
+    position: absolute; /* Position images on top of each other */
+    top: 50%; /* Center images vertically */
+    left: 50%; /* Center images horizontally */
+    transform: translate(-50%, -50%); /* Adjust positioning to center */
+    max-width: 100%; /* Prevent images from stretching beyond the container */
+    height: 100%; /* Let the image adjust its height according to the container's height */
+    object-fit: contain; /* Ensure the images maintain their aspect ratio and fit within the container */
+    opacity: 0; /* Initially hide all images */
+    transition: opacity 1s ease-in-out; /* Smooth fade transition */
+  }
+  
+  /* Active image is visible */
+  .slider img.active {
+    opacity: 1; /* Show the image that has the 'active' class */
+  }
+  
+  /* Navigation button container */
+  .navigation-button {
+    text-align: center;
+    position: relative;
+    top: -30px; /* Adjust position if needed */
+  }
+  
+  /* Dot styling */
+  .dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  /* Active dot styling */
+  .active,
+  .dot:hover {
+    background-color: #717171;
+  }
+  
 /* ------------------------------------------------------------------- 
  * responsive:
  * display headings
