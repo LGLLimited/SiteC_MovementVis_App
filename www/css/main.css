@@ -1255,6 +1255,14 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     color: #000000;
 }
 
+#bcHydroLogo {
+    height: 12rem; /* Matches font size of .home-content h3 */
+    margin-top: 0;
+    margin-bottom: -5rem;
+    margin-left: -3.85rem;
+    opacity: 1; /* Match the text's color opacity */
+}
+
 .acknowledgement {
     font-family: "montserrat-bold", sans-serif;
     font-size: 1.4rem;
@@ -1498,59 +1506,95 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 
 /* Slider container */
 .slider {
-    width: 80%; /* Set the width of the slider container */
-    max-width: 100%; /* Ensure the container does not exceed the screen width */
+    width: 100%; /* Full width */
+    height: 900px; /* Increased height for more space */
     position: relative;
-    overflow: hidden; /* Ensures only one image is shown at a time */
+    overflow: hidden; /* Hide overflow */
     display: flex;
-    justify-content: center; /* Centers the slider content horizontally */
-    align-items: center; /* Centers the slider content vertically */
-    margin: 0 auto; /* Centers the slider on the page */
-    height: 800px; /* Fixed height of the slider container */
-  }
-  
-  /* Images in the slider */
-  .slider img {
-    position: absolute; /* Position images on top of each other */
-    top: 50%; /* Center images vertically */
-    left: 50%; /* Center images horizontally */
-    transform: translate(-50%, -50%); /* Adjust positioning to center */
-    max-width: 100%; /* Prevent images from stretching beyond the container */
-    height: 100%; /* Let the image adjust its height according to the container's height */
-    object-fit: contain; /* Ensure the images maintain their aspect ratio and fit within the container */
-    opacity: 0; /* Initially hide all images */
-    transition: opacity 1s ease-in-out; /* Smooth fade transition */
-  }
-  
-  /* Active image is visible */
-  .slider img.active {
-    opacity: 1; /* Show the image that has the 'active' class */
-  }
-  
-  /* Navigation button container */
-  .navigation-button {
-    text-align: center;
-    position: relative;
-    top: -30px; /* Adjust position if needed */
-  }
-  
-  /* Dot styling */
-  .dot {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    background-color: black; /* Fallback color */
+    transition: background-image 0.5s ease-in-out;
+    flex-direction: column; /* Stack the title and image vertically */
+}
+
+/* Gallery title */
+.gallery-title {
+    position: absolute;
+    top: 30px; /* Adjust title position, now it's below the image */
+    left: 50%;
+    transform: translateX(-50%);
+   
+    color: white;
+    font-weight: bold;
+    z-index: 3; /* Title above the background, not the image */
+
+    font-size: 7rem; /* Default font size */
+    line-height: 1.25;
+    letter-spacing: -.1rem;
+    color: #FFFFFF; /* Set the text color */
+    font-family: "montserrat-medium"; /* Specific font for h1 */
+}
+
+/* Images in the slider */
+.slider img {
+    position: absolute;
+    top: 55%; /* Move the image down further from the top */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the images */
+    max-width: 70%; /* Shrink images further to leave more space */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 2; /* Ensure image stays above the dark background */
+}
+
+/* Active image is visible */
+.slider img.active {
+    opacity: 1;
+}
+
+/* Navigation buttons (arrows) */
+.navigation-button {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.nav-arrow {
+    color: white;
+    font-size: 40px;
     cursor: pointer;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  
-  /* Active dot styling */
-  .active,
-  .dot:hover {
-    background-color: #717171;
-  }
-  
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: none;
+    transition: color 0.3s;
+}
+
+.nav-arrow:hover {
+    color: rgba(255, 255, 255, 0.8); /* Lighter color on hover */
+}
+
+/* Dark overlay for background */
+.slider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+    z-index: 1; /* Place it behind images */
+    pointer-events: none;
+}
+
+
 /* ------------------------------------------------------------------- 
  * responsive:
  * display headings

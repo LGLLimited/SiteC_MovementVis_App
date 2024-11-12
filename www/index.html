@@ -63,6 +63,7 @@
                     <li><a class="smoothscroll"  href="#about" title="about">Introduction</a></li>
                     <li><a class="smoothscroll"  href="#stationMap" title="stations">Stations</a></li>
                     <li><a class="smoothscroll"  href="#movementMap" title="movement">Movement</a></li>
+                    <li><a class="smoothscroll"  href="#gallery" title="gallery">Gallery</a></li>
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -88,9 +89,9 @@
         <div class="home-content">
 
             <div class="row home-content__main">
-
-                <h3>BC Hydro</h3>
-
+                <h1>
+                <img src="BCHyrdoLogo3.png" alt="BC Hydro", id="bcHydroLogo">
+                </h1>
                 <h1>
                     Site C: Fish Movement Assessment<br>
                 </h1>
@@ -235,35 +236,44 @@ style="background-image: url('peace2.jpg'); background-size: cover; background-r
     </div>
 </div>
 
-<section id='movementMap' class="s-about">
+<section id="movementMap" class="s-about">
     <div class="tab__container" data-aos="fade-up">
         {{movementMap}}
     </div>
-  </section> 
+</section>
 
+<div class="slider">
+    <!-- Gallery Title -->
+    <div class="gallery-title" id="gallery">Gallery</div>
+    
+    <!-- Slider images -->
+    <img id="img-1" src="image_gallery/sitefill.png" alt="Image 1" />
+    <img id="img-2" src="image_gallery/Antenna.png" alt="Image 2" />
+    <img id="img-3" src="image_gallery/peace2.jpg" alt="Image 3" />
+    <img id="img-4" src="image_gallery/boat.jpg" alt="Image 4" />
+    <img id="img-5" src="image_gallery/creek1.jpg" alt="Image 5" />
+    <img id="img-6" src="image_gallery/snow.jpg" alt="Image 6" />
+    <img id="img-7" src="image_gallery/setup1.jpg" alt="Image 7" />
+    <img id="img-8" src="image_gallery/river.jpg" alt="Image 8" />
+    <img id="img-9" src="image_gallery/panel.jpg" alt="Image 9" />
+    <img id="img-10" src="image_gallery/Moberly River 2.JPG" alt="Image 10" />
+    <img id="img-11" src="image_gallery/overlook.jpg" alt="Image 11" />
+    <img id="img-12" src="image_gallery/airplane.png" alt="Image 12" />
+    <img id="img-13" src="image_gallery/rocks.jpg" alt="Image 13" />
+    <img id="img-14" src="image_gallery/station.jpg" alt="Image 14" />
+    <img id="img-15" src="image_gallery/setup2.jpg" alt="Image 15" />
 
-  <div class="slider">
-    <img id="img-1" src="image_gallery/airplane.png" alt="Image 1"/>
-    <img id="img-2" src="image_gallery/Antenna.png" alt="Image 2"/>
-    <img id="img-3" src="image_gallery/boat.jpg" alt="Image 3"/>
-  </div>
-  <div class="navigation-button">
-    <span class="dot active" onclick="changeSlide(0)"></span>
-    <span class="dot" onclick="changeSlide(1)"></span>
-    <span class="dot" onclick="changeSlide(2)"></span>
-  </div>
-
-    <!-- Java Script
-    ================================================== -->
-    <script src="js/plugins.js"></script>
-    <script src="js/gallery.js"></script>
-    <script src="js/main.js"></script>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <!-- Navigation buttons -->
+    <div class="navigation-button">
+      <button id="prev" class="nav-arrow">&#10094;</button> <!-- Left arrow -->
+      <button id="next" class="nav-arrow">&#10095;</button> <!-- Right arrow -->
+    </div>
+</div>
+  
+  <!-- JavaScript -->
+  <script src="js/plugins.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
