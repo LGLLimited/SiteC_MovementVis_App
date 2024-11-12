@@ -1411,10 +1411,15 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     color: #ffffff;
 }
 
+.moveMapSideBar{
+    max-height: 900px; /* Set the desired height for the sidebar */
+    overflow-y: auto; /* Scroll if content exceeds set height */
+  }
 
 /* Movement map tabs */
 .tabbable > .nav > li > a {
     background-color: white;
+    border-radius: 15px;
     color: grey;
     opacity: 0.8; /* Make non-active tab slightly transparent */
     transition: opacity 0.3s, background-color 0.3s, color 0.3s; /* Smooth transition for opacity, background, and color */
@@ -1424,6 +1429,7 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     background-color: #4cb849;
     color: white;
     opacity: 1; /* Full opacity for active tab */
+    margin-bottom: -5px; 
 }
 
 .tabbable > .nav > li > a:hover {
@@ -1432,6 +1438,14 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     opacity: 1; /* Full opacity on hover */
 }
 
+.nav.nav-tabs {
+    padding-bottom: 2px; 
+    border: none;       /* Remove border if needed */
+}
+
+.nav-tabs {
+    width: 70%;
+}
 
 .leaflet-container {
     width: 80vw !important;
@@ -1439,11 +1453,8 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     min-height: 800px !important;
     max-width: 1200px !important;
     max-height: 1200px !important;
-}
-
-.nav.nav-tabs {
-    padding: 0;         /* Remove padding */
-    border: none;       /* Remove border if needed */
+    border: 5px solid #f5f5f5;
+    border-radius: 15px;
 }
 
 
@@ -1473,14 +1484,6 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     padding-right: 0;
 }
 
-.moveMapSideBar{
-    max-height: 900px; /* Set the desired height for the sidebar */
-    overflow-y: auto; /* Scroll if content exceeds set height */
-  }
-
-.nav-tabs {
-    width: 70%;
-}
 
 
 .link {

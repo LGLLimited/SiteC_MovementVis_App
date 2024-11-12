@@ -13,7 +13,7 @@ movementMap_ui <-
          # play button size
          tags$head(tags$style(type='text/css', ".slider-animate-button { font-size: 12pt !important;}")),
          # shift play button to left and pad away from slider
-         tags$head(tags$style(type='text/css', ".slider-animate-container { text-align: left; margin-top: -2px; padding:0}")),
+         tags$head(tags$style(type='text/css', ".slider-animate-container { text-align: left; margin-top: -2px; padding:1}")),
          # remove minor ticks on animation slider
          tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),
          h1("Plot settings"),
