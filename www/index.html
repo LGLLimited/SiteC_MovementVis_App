@@ -61,7 +61,8 @@
                 <ul class="header-nav__list">
                     <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
                     <li><a class="smoothscroll"  href="#about" title="about">Introduction</a></li>
-                    <li><a class="smoothscroll"  href="#movement" title="movement">Movement</a></li>
+                    <li><a class="smoothscroll"  href="#stationMap" title="stations">Stations</a></li>
+                    <li><a class="smoothscroll"  href="#movementMap" title="movement">Movement</a></li>
                 </ul>
 
             </div> <!-- end header-nav__content -->
@@ -225,8 +226,13 @@
 </section> 
 <!-- end s-about -->
 
-<div id = 'stationMap' data-aos="fade-up">
-    {{stationMap}}
+<div id = 'stationMap' data-aos="fade-up"
+style="background-image: url('peace2.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+        <div style="position: relative; z-index: 2;">
+            {{stationMap}}
+        </div>
+    </div>
 </div>
 
 <section id='movementMap' class="s-about">

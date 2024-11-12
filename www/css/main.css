@@ -1411,12 +1411,34 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     color: #ffffff;
 }
 
+
+/* Movement map tabs */
+.tabbable > .nav > li > a {
+    background-color: white;
+    color: grey;
+    opacity: 0.8; /* Make non-active tab slightly transparent */
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s; /* Smooth transition for opacity, background, and color */
+}
+
+.tabbable > .nav > li[class=active] > a {
+    background-color: #4cb849;
+    color: white;
+    opacity: 1; /* Full opacity for active tab */
+}
+
+.tabbable > .nav > li > a:hover {
+    background-color: #7ed37b; /* Light grey background on hover */
+    color: white; /* Change text color on hover */
+    opacity: 1; /* Full opacity on hover */
+}
+
+
 .leaflet-container {
-    width: 100%; /* Full viewport width */
-    height: 80%; /* 80% of viewport height */
-    flex-grow: 1;
-    min-width: 1200px;
-    min-height: 800px;
+    width: 80vw !important;
+    height: 50vh !important;
+    min-height: 800px !important;
+    max-width: 1200px !important;
+    max-height: 1200px !important;
 }
 
 .nav.nav-tabs {
