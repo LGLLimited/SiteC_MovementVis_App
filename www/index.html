@@ -61,6 +61,7 @@
                 <ul class="header-nav__list">
                     <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
                     <li><a class="smoothscroll"  href="#about" title="about">Introduction</a></li>
+                    <li><a class="smoothscroll"  href="#reports" title="about">Reports</a></li>
                     <li><a class="smoothscroll"  href="#stationMap" title="stations">Stations</a></li>
                     <li><a class="smoothscroll"  href="#movementMap" title="movement">Movement</a></li>
                     <li><a class="smoothscroll"  href="#gallery" title="gallery">Gallery</a></li>
@@ -203,14 +204,14 @@
     <!-- Acknowledge -->
     <div class="about__line"></div>
 
-    <div class="row acknowledge-header" data-aos="fade-up">
+    <div class="row acknowledge-header" data-aos="fade-up"  id='reports' >
         <div class="col-full">
             <div class="acknowledge-line"></div>
             <h2 class="acknowledgement">                
                 We acknowledge this research was conducted on the traditional territory of 
                 Treaty 8 First Nations of Dunne Zaa, Cree, and Tse’khene cultural descent.
             </h2>
-            <div class="acknowledge-line_bottom"></div>
+            <div class="acknowledge-line_bottom" ></div>
         </div>
     </div>
 
@@ -222,13 +223,14 @@
                 <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2020-Annual-Report.pdf" target="_blank" class="button-link">2020 Report</a>
                 <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank" class="button-link">2021 Report</a>
                 <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2022-Annual-Report.pdf" target="_blank" class="button-link">2022 Report</a>
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-SiteC-Fish-Movement-Assessment-2023-Annual-Report.pdf" target="_blank" class="button-link">2023 Report</a>
             </div>
         </div>
 </section> 
 <!-- end s-about -->
 
 <div id = 'stationMap' data-aos="fade-up"
-style="background-image: url('peace2.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+style="background-image: url('antenna_overlook.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
         <div style="position: relative; z-index: 2;">
             {{stationMap}}
@@ -236,7 +238,9 @@ style="background-image: url('peace2.jpg'); background-size: cover; background-r
     </div>
 </div>
 
-<section id="movementMap" class="s-about">
+<section id="movementMap" class="s-about" >
+    <div class="move-title" data-aos="fade-up">Visualizing Movement</div>
+    <div class="move-line" data-aos="fade-up"></div>
     <div class="tab__container" data-aos="fade-up">
         {{movementMap}}
     </div>
@@ -244,23 +248,21 @@ style="background-image: url('peace2.jpg'); background-size: cover; background-r
 
 <div class="slider">
     <!-- Gallery Title -->
-    <div class="gallery-title" id="gallery">Gallery</div>
+    <!-- <div class="gallery-title" id="gallery">Gallery</div> --> 
     
     <!-- Slider images -->
-    <img id="img-1" src="image_gallery/sitefill.png" alt="Image 1" />
+    <img id="img-1" src="image_gallery/sitefill.jpg" alt="Image 1" />
     <img id="img-2" src="image_gallery/Antenna.png" alt="Image 2" />
     <img id="img-3" src="image_gallery/peace2.jpg" alt="Image 3" />
     <img id="img-4" src="image_gallery/boat.jpg" alt="Image 4" />
     <img id="img-5" src="image_gallery/creek1.jpg" alt="Image 5" />
     <img id="img-6" src="image_gallery/snow.jpg" alt="Image 6" />
-    <img id="img-7" src="image_gallery/setup1.jpg" alt="Image 7" />
     <img id="img-8" src="image_gallery/river.jpg" alt="Image 8" />
     <img id="img-9" src="image_gallery/panel.jpg" alt="Image 9" />
     <img id="img-10" src="image_gallery/Moberly River 2.JPG" alt="Image 10" />
     <img id="img-11" src="image_gallery/overlook.jpg" alt="Image 11" />
     <img id="img-12" src="image_gallery/airplane.png" alt="Image 12" />
     <img id="img-13" src="image_gallery/rocks.jpg" alt="Image 13" />
-    <img id="img-14" src="image_gallery/station.jpg" alt="Image 14" />
     <img id="img-15" src="image_gallery/setup2.jpg" alt="Image 15" />
 
     <!-- Navigation buttons -->
@@ -269,6 +271,7 @@ style="background-image: url('peace2.jpg'); background-size: cover; background-r
       <button id="next" class="nav-arrow">&#10095;</button> <!-- Right arrow -->
     </div>
 </div>
+<br>
   
   <!-- JavaScript -->
   <script src="js/plugins.js"></script>

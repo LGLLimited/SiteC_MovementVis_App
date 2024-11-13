@@ -90,13 +90,13 @@ body {
  * ## links
  * ------------------------------------------------------------------- */
 a {
-    color: #0087cc;
+    color: #ffffff;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
 }
 
 a:hover, a:focus, a:active {
-    color: #10a4ca;
+    color: #ffffff;
 }
 
 a:hover, a:active {
@@ -1424,6 +1424,10 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     overflow-y: auto; /* Scroll if content exceeds set height */
   }
 
+.slider-animate-button * {
+    color: #428bca;
+}
+
 /* Movement map tabs */
 .tabbable > .nav > li > a {
     background-color: white;
@@ -1465,6 +1469,30 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     border-radius: 15px;
 }
 
+.move-title {
+    text-align: center;
+    position: relative;
+    color: white;
+    font-weight: bold;
+    margin-top: -12rem;
+    margin-bottom: 5rem;
+    font-size: 7rem; /* Default font size */
+    line-height: 1.25;
+    letter-spacing: -.1rem;
+    color: #FFFFFF; /* Set the text color */
+    font-family: "montserrat-medium"; /* Specific font for h1 */
+}
+
+.move-line {
+    height: 1px; 
+    background-color: rgba(255, 255, 255, 0.8); 
+    margin-top: -3rem; 
+    margin-bottom: 5rem; 
+    width: 100%; 
+    max-width: 550px; 
+    margin-left: auto; /* Center horizontally */
+    margin-right: auto; /* Center horizontally */
+}
 
 .tab-pane {
     width: 100%; /* Ensure full width within its container */
@@ -1540,10 +1568,10 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 /* Images in the slider */
 .slider img {
     position: absolute;
-    top: 55%; /* Move the image down further from the top */
+    top: 50%; /* Move the image down further from the top */
     left: 50%;
     transform: translate(-50%, -50%); /* Center the images */
-    max-width: 70%; /* Shrink images further to leave more space */
+    max-width: 80%; /* Shrink images further to leave more space */
     height: auto; /* Maintain aspect ratio */
     object-fit: contain;
     opacity: 0;
