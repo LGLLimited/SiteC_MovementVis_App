@@ -14,7 +14,6 @@ leaflet_extras_example.r
 data_operational_10Feb22.rds
 billy.mp4
 run_app.r
-server.r
 data_operational_20230410.rds
 data_operational_11Mar24.rds
 .lintr
