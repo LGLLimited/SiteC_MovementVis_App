@@ -199,7 +199,7 @@ whiteFin <- c("1018", "943")  #Codes: 120, 674
 walleyeFin  <- c("521", "480", "877") #Codes: 160, 162, 501
 
 selected_individuals <- 
-  c(NovChoosen, bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
+  c(bullTroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
 
 ind_d <- ind_d %>% 
   filter(Tag_ID %in% selected_individuals) %>% 
