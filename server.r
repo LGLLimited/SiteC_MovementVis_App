@@ -104,10 +104,10 @@ server <- function(input, output, session) {
     req(input$tabs)
     if(input$tabs=="Individual Movements"){
       text <- "This plot animates detections of tagged individuals through time. 
-      The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility."
+      The fish marker appears as gray for volitional movements, and red for movements after the individual has been trap and hauled at the temporary upstream fish passage facility (2020 to 2024) or the permanent upstream fish passage facility (2025 onwards)."
     }else{
       text <- "This plot animates counts of tagged individuals at each detection location through time at the selected time step. 
-      The size of the circle is proportional to the number of unique individuals detected at a location. If <b>Show detections by type</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, mobile detections, and recapture PIT tag detections."
+      The size of the circle is proportional to the number of unique individuals detected at a location. If <b>'Show detections by type'</b> is selected, circles are coloured to distinguish between release locations, detections at fixed receivers, mobile detections, and recapture PIT tag detections."
     }
       text
   
