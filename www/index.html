@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--[if lt IE 9 ]><html class="no-js oldie" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Site C Fish Movement Assessment</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" 
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" 
+      crossorigin="anonymous">
+    </script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/pace.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="lglFavicon.ico" type="image/x-icon">
+    <link rel="icon" href="lglFavicon" type="image/x-icon">
+
+    <!-- shiny stuff
+        ================================================== -->
+    <style>.selectize-dropdown {z-index: 10000}</style>
+    {{headContent()}}
+    {{bootstrapLib()}}
+</head>
+
+<body id="top">
+
+    <!-- header
+    ================================================== -->
+    <header class="s-header">
+
+        <nav class="header-nav">
+
+            <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
+
+            <div class="header-nav__content">
+                <h3>Navigation</h3>
+                
+                <ul class="header-nav__list">
+                    <li class="current"><a class="smoothscroll"  href="#home" title="home">Home</a></li>
+                    <li><a class="smoothscroll"  href="#about" title="about">Introduction</a></li>
+                    <li><a class="smoothscroll"  href="#reports" title="about">Reports</a></li>
+                    <li><a class="smoothscroll"  href="#stationMap" title="stations">Stations</a></li>
+                    <li><a class="smoothscroll"  href="#movementMap" title="movement">Movement</a></li>
+                    <li><a class="smoothscroll"  href="#galleryDiv" title="gallery">Gallery</a></li>
+                </ul>
+
+            </div> <!-- end header-nav__content -->
+
+        </nav>  <!-- end header-nav -->
+
+        <a class="header-menu-toggle" href="#0">
+            <span class="header-menu-text">Menu</span>
+            <span class="header-menu-icon"></span>
+        </a>
+
+    </header> <!-- end s-header -->
+
+
+    <!-- home
+    ================================================== -->
+    <section id="home" class="s-home target-section" 
+    style="background-image: url('peace1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+
+        <div class="overlay"></div>
+        <div class="shadow-overlay"></div>
+
+        <div class="home-content">
+
+            <div class="row home-content__main">
+                <h1>
+                <img src="BCHyrdoLogo3.png" alt="BC Hydro", id="bcHydroLogo">
+                </h1>
+                <h1>
+                    Site C Fish Movement Assessment<br>
+                </h1>
+
+                
+                <h3>
+                    Explore fish movement in the Peace Region <br>
+                </h3>
+                
+
+                <div class="home-content__buttons">
+                    <a href="#about" class="smoothscroll btn btn--stroke">
+                        View the app
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="home-content__scroll">
+                <a href="#about" class="scroll-link smoothscroll">
+                    <span>Scroll Down</span>
+                </a>
+            </div>
+
+            <div class="home-content__line"></div>
+
+        </div> <!-- end home-content -->
+
+
+    </section> <!-- end s-home -->
+
+
+
+<!-- about
+================================================== -->
+<section id='about' class="s-about">
+    <div class="row section-header has-bottom-sep" data-aos="fade-up">
+        <div class="col-full">
+            <h3 class="subhead subhead--dark">
+                Fisheries and Aquatic Habitat Monitoring and Follow-up Program
+            </h3>
+            <h1 class="display-1 display-1--light">
+                Introduction
+            </h1>
+        </div>
+    </div> <!-- end section-header -->
+    
+    <!-- Introduction section -->
+    <div class="about__container" data-aos="fade-up">
+      <!--- Background -->
+        <!-- Left Section -->
+        <div class="about__left">
+            <p class="about__large-word">Background</p>
+        </div>
+        <!-- Vertical Line -->
+        <div class="vertical-line"></div>
+        <!-- Right Section -->
+        <div class="about__right">
+            <p>
+                Since 2019, BC Hydro has tagged six fish species (Bull Trout, Arctic Grayling, Rainbow Trout, Walleye, 
+                Mountain Whitefish and Burbot) with radio transmitters to assess movement patterns in the Peace River 
+                and its tributaries. Tagged fish are detected at an array of fixed receivers located throughout the 
+                Peace River and its tributaries (see Map tab) as well as during mobile surveys by fixed-wing aircraft 
+                or helicopter. Fixed receivers are operated from April through October and data are downloaded monthly. 
+                Mobile surveys target Arctic Grayling in the Moberly River from May to June and Bull Trout in the 
+                Halfway River from August to September to identify likely spawning locations and movement timing. 
+                Mobile surveys are also conducted throughout the watershed several times during winter months to 
+                supplement detection data while the majority of the fixed-receiver array is offline. Additional 
+                information on the Site C Fish Movement Assessment can be found in the 
+                <a href="https://sitecproject.com/sites/default/files/fish-tracking-brochure-2023-january.pdf" 
+                target="_blank" class="link">
+                    Site C Fish Tracking Brochure
+                </a>
+                 and 
+                 <a href="https://www.sitecproject.com/sites/default/files/fish-tracking-notification-2023.pdf" 
+                 target="_blank" class="link">
+                 Site C Fish Tracking Notification.
+                 </a>
+
+            </p>
+        </div>
+        <!-- end Background -->
+    </div> <!-- end first about__container -->
+
+    <div class="about__line"></div>
+
+    <!-- Shiny app -->
+    <div class="about__container" data-aos="fade-up">
+        <!-- Left Section -->
+        <div class="about__left">
+            <p class="about__large-word">Shiny App</p>
+        </div>
+        <!-- Vertical Line -->
+        <div class="vertical-line"></div>
+        <!-- Right Section -->
+        <div class="about__right">
+            <p>
+                This Shiny application offers two visualizations of the detection data, individual movements and seasonal distribution.
+                The <strong> Individual Movements </strong> map plots detection locations for select individual fish through time. 
+                The <strong> Seasonal Distribution </strong> map shows 
+                counts of unique individuals at detection locations during either weekly or monthly time intervals with 
+                circles sized proportionally to the number of individuals detected. Detection locations are colored 
+                to distinguish release locations, detections at fixed stations, mobile survey detections, and PIT tag 
+                detections.
+            </p>
+        </div>
+        <!-- end Shiny App -->
+    </div> <!-- end second about__container -->
+    <!-- Acknowledge -->
+    <div class="about__line"></div>
+
+    <div class="row acknowledge-header" data-aos="fade-up"  id='reports' >
+        <div class="col-full">
+            <div class="acknowledge-line"></div>
+            <h2 class="acknowledgement">                
+                We acknowledge this research was conducted on the traditional territory of 
+                Treaty 8 First Nations of Dunne Zaa, Cree, and Tse’khene cultural descent.
+            </h2>
+            <div class="acknowledge-line_bottom" ></div>
+        </div>
+    </div>
+
+        <!-- Annual reports -->
+        <div class="reports__container annual-reports" data-aos="fade-up">
+            <p class="annual-reports__title">Annual Reports</p>
+            <div class="button-container">
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2019-Annual-Report.pdf" target="_blank" class="button-link">2019 Report</a>
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2020-Annual-Report.pdf" target="_blank" class="button-link">2020 Report</a>
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2021-Annual-Report.pdf" target="_blank" class="button-link">2021 Report</a>
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-Site-C-Fish-Movement-Assessment-2022-Annual-Report.pdf" target="_blank" class="button-link">2022 Report</a>
+                <a href="https://sitecproject.com/sites/default/files/Mon-1b-Task-2d-SiteC-Fish-Movement-Assessment-2023-Annual-Report.pdf" target="_blank" class="button-link">2023 Report</a>
+            </div>
+        </div>
+</section> 
+<!-- end s-about -->
+
+<div id = 'stationMap' data-aos="fade-up"
+style="background-image: url('image_gallery/overlook2.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
+        <div style="position: relative; z-index: 2;">
+            {{stationMap}}
+        </div>
+    </div>
+</div>
+
+<section id="movementMap" class="s-about" >
+    <div class="move-title" data-aos="fade-up">Visualizing Movement</div>
+    <div class="move-line" data-aos="fade-up"></div>
+    <div class="tab__container" data-aos="fade-up">
+        {{movementMap}}
+    </div>
+</section>
+
+<div class="slider", id="galleryDiv">
+    <!-- Gallery Title -->
+    <!-- <div class="gallery-title" id="gallery">Gallery</div> --> 
+    
+    <!-- Slider images -->
+    <img id="img-1" src="image_gallery/siteFillNich.jpg" alt="Image 1" />
+    <img id="img-3" src="image_gallery/peace2.jpg" alt="Image 3" />
+    <img id="img-4" src="image_gallery/boat.jpg" alt="Image 4" />
+    <img id="img-5" src="image_gallery/creek1.jpg" alt="Image 5" />
+    <img id="img-5" src="image_gallery/antenna1.jpg" alt="Image 5" />
+    <img id="img-3" src="image_gallery/rcBoat2.jpg" alt="Image 3" />
+    <img id="img-6" src="image_gallery/snow.jpg" alt="Image 6" />
+    <img id="img-8" src="image_gallery/river.jpg" alt="Image 8" />
+    <img id="img-9" src="image_gallery/panel.jpg" alt="Image 9" />
+    <img id="img-10" src="image_gallery/Moberly River 2.JPG" alt="Image 10" />
+    <img id="img-11" src="image_gallery/overlook.jpg" alt="Image 11" />
+    <img id="img-12" src="image_gallery/airplane.png" alt="Image 12" />
+    <img id="img-13" src="image_gallery/rocks.jpg" alt="Image 13" />
+
+    <!-- Navigation buttons -->
+    <div class="navigation-button">
+      <button id="prev" class="nav-arrow">&#10094;</button> <!-- Left arrow -->
+      <button id="next" class="nav-arrow">&#10095;</button> <!-- Right arrow -->
+    </div>
+</div>
+<br>
+  
+  <!-- JavaScript -->
+  <script src="js/plugins.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
