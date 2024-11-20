@@ -172,7 +172,7 @@ rainbow <- c("607","563")  #Codes: 275 (okay), 342 (pretty good)
 whitefish <- c("1018", "943")  #Codes: 120 (okay, hauled), 674 (good)
 walleye <- c("521", "480")  #Codes: 160 (real good), 162 (great)
 
-## New interesting fish ========================================================
+## Interesting fish ========================================================
 new_bulltrout_dist <- c("809", "637")  #Codes:647 (all the way up halfway twice), 148 (goes up halfway)
 new_bulltrout_zone <- c("1107", "612") #Codes: 209 (fantastic example), 269 (fine)
 new_bulltrout_dist_year  <- c("829") #Codes: 661 (just back and forth over many years, trouble with dam?)
@@ -182,6 +182,13 @@ newrainbow <- c("573", "655") #Codes: 238 (good but not special), 215 (good)
 newwhite <- c("1015") #Codes: 117 (not interesting)
 newwalleye <- c("480", "877", "472", "519") #Codes: 162 (great), 501 (great), 116 (fine), 158 (nope)
 
+## New Interesting fish (20241119) =====================================================================================
+NovBull <- c("1139", "476", "941", "613", "568")#(241 #pretty good),  (308 #good), (672 #pretty okay), (233 #good), (331 #not good)
+NovBull2 <- c("544", "1101", "613", "829", "960", "540") 
+  #(337 & 203 #good if we don't mind it getting stuck), (233 #good), 
+                    #(661 #another stuck at dam), (691 #great), (208 #mid)
+
+NovChoosen  <- c("960", "613") #691, 233
 ## Final picks =================================================================
 bulltroutFin <- c(billy, "540", "544", "1107", "829") #I'd consider 647 as well
           #^Codes: 496, 208, 337, 209, 661
@@ -192,7 +199,7 @@ whiteFin <- c("1018", "943")  #Codes: 120, 674
 walleyeFin  <- c("521", "480", "877") #Codes: 160, 162, 501
 
 selected_individuals <- 
-  c(bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
+  c(NovChoosen, bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
 
 ind_d <- ind_d %>% 
   filter(Tag_ID %in% selected_individuals) %>% 
