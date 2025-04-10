@@ -3,7 +3,7 @@ library(lubridate)
 library(sf)
 
 # Operational data ####
-d_opr <-  readRDS("data/OperationalData_Cleaned_13June2024_v3.rds") %>% 
+d_opr <-  readRDS("data/OperationalData_Cleaned_10Apr2025.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
@@ -26,7 +26,7 @@ d_opr  <- d_opr %>%
 #all(colnames(readRDS('data/data_operational_20230208.rds') %>% as_tibble()) %in% colnames(d_opr))
 
 min_date <- ymd("2019-04-01")
-max_date <- ymd("2023-12-31")
+max_date <- ymd("2024-09-14")
 
 #d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
