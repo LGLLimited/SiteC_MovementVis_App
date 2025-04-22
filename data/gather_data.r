@@ -3,7 +3,7 @@ library(lubridate)
 library(sf)
 
 # Operational data #####################################################################################################
-d_opr <-  readRDS("data/OperationalData_Cleaned_10Apr2025.rds") %>% 
+d_opr <-  readRDS("data/OperationalData_Cleaned_22Apr2025.rds") %>% 
   as_tibble() %>% 
   # records deemed impossible per Nich and Dave
   filter(!R_ID %in% 3819:3824)
@@ -24,7 +24,7 @@ d_opr  <- d_opr %>%
 #all(colnames(readRDS('data/data_operational_20230208.rds') %>% as_tibble()) %in% colnames(d_opr))
 
 min_date <- ymd("2019-04-01")
-max_date <- ymd("2024-09-14")
+max_date <- ymd("2024-12-31")
 
 #d_opr 
 #d_opr <- readRDS("data/data_operational_10Feb22.rds")
@@ -188,9 +188,10 @@ burbotFin <- c("822","745")  #Codes: 626, 627
 rainbowFin <- c("607","563", "655") #Codes 275, 342, 215
 whiteFin <- c("1018", "943")  #Codes: 120, 674 
 walleyeFin  <- c("521", "480", "877") #Codes: 160, 162, 501
+NichFish  <- c("1799") #Per request of Nich's email AG 149.360 275
 
 selected_individuals <- 
-  c(bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin)
+  c(bulltroutFin, graylingFin, burbotFin, rainbowFin, whiteFin, walleyeFin, NichFish)
 
 ind_d <- ind_d %>% 
   filter(Tag_ID %in% selected_individuals) %>% 
